@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFCCCCCC">
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Login via Facebook"
+        android:id="@+id/facebook"
+        android:layout_gravity="center_horizontal"
+        android:background="#3b5998"
+        android:layout_margin="8dp"
+        android:textColor="#ffffffff" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Login via Twitter"
+        android:id="@+id/twitter"
+        android:layout_gravity="center_horizontal"
+        android:background="#55ACEE"
+        android:layout_margin="8dp"
+        android:textColor="#ffffffff"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Login via LinkedIn"
+        android:id="@+id/linkedin"
+        android:layout_gravity="center_horizontal"
+        android:background="#287bbc"
+        android:layout_margin="8dp"
+        android:textColor="#ffffffff"/>
+</LinearLayout>
