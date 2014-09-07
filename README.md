@@ -3,10 +3,15 @@ ASNETutorial
 
 Simple example project for https://github.com/gorbin/ASNE library
 
-Integrating social networks in your android application is easy and userfriendly: easily login into your app using their social account which avoids filling a long registration forms and gives your some info about them. For integrate any Social network to your application you should read documentation for every social network, download SDK or use some libraries for OAuth and make http calls by yourself. Ussualy it take a lot of time and nerves but in this tutorial I explained how to easily and fast integrate Facebook, Twitter, LinkedIn in your android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with simple and common requests.
+Today social network integration to your android application is common practice - it makes user easily login to your app and share their actions. There are a lot of way to do it - usually developers add native social network SDK or use API for every network. It provides login via installed social network application or native dialogs. You have to spend time and nerves to learn and use different social network SDKs.
+
+What if you need to add one more social network for your application? Sometimes you have to reorganize or redo all your integrations. This leads to idea to create and implement common interface for all social networks. Fortunately there is an open source modular library [ASNE](https://github.com/gorbin/ASNE) that allows you to choose necessary social network and provides full sdk and common interface for most oftenly used requests(login, share, friendslist & etc) It saves your time and simplifies adding another networks in the future. Moreover you can easily add any other social network as new module - the similar way as it done in other modules. 
+
+In this tutorial you can learn how easily integrate Facebook, Twitter in android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with login, share link and showing friends list.
+ 
 
 ##Registering app - getting keys for your application
-In order to implement Social networks in your application you need keys which are used to make API calls. So register a new social network application and get the keys. Check small tutorial how to get it:
+In order to implement Social networks in your application you need keys to make API calls. So register a new social network application and get the keys. Check small tutorial how to get it:
 
  - [Facebook](https://github.com/gorbin/ASNE/wiki/Create-Facebook-App)
  - [Twitter](https://github.com/gorbin/ASNE/wiki/Create-Twitter-App)
@@ -121,7 +126,7 @@ To continue you need
     }
  ```
 5. Lets create some layouts
- 
+  Just login buttons in main fragment
  **main_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/main_fragment.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -159,7 +164,7 @@ To continue you need
             android:textColor="#ffffffff"/>
     </LinearLayout>
     ```
- Just login buttons
+ Create simple profile card for user
     **profile_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/profile_fragment.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -278,77 +283,6 @@ To continue you need
     </ScrollView>
     ```
 
- **friends_list_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/friends_list_fragment.xml))
-    ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:background="#CCCCCC">
-    
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:padding="4dp"
-            android:background="#FFFFFF"
-            android:scrollbarStyle="outsideOverlay"/>
-    </RelativeLayout>
-    ```
-
- **friend_row.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/friend_row.xml))
-    ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="4dp">
-    
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:id="@+id/id"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="6dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/image">
-        </TextView>
-    
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="18sp"
-            android:id="@+id/label"
-            android:maxLines="3"
-            android:layout_marginLeft="6dp"
-            android:layout_below="@+id/id"
-            android:layout_toRightOf="@+id/image"
-            android:ellipsize="end"
-        </TextView>
-    
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/image"
-            android:contentDescription="@string/app_name"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:padding="2dp"
-            android:adjustViewBounds="true"
-            android:cropToPadding="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/user" />
-    
-    </RelativeLayout>
-    ```
  and save socialnetworks colors to
 
  **color.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/values/colors.xml))
