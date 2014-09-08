@@ -13,7 +13,7 @@ In this tutorial you can learn how easily integrate Facebook, Twitter in android
 ##Registering app - getting keys for your application
 In order to implement Social networks in your application you need keys to make API calls. So register a new social network application and get the keys. Check small tutorial how to get it:
 
- - [VK](https://github.com/gorbin/ASNE/wiki/Create-VK-App)
+ - [VK](https://github.com/gorbin/ASNE/wiki/Create-Vkontakte-App)
  - [Odnoklassniki](https://github.com/gorbin/ASNE/wiki/Create-Odnoklassniki-App)
 
 To continue you need 
