@@ -2,7 +2,6 @@ package com.github.gorbin.asnetutorial;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,10 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.github.gorbin.asne.core.SocialNetwork;
-
 
 public class MainActivity extends ActionBarActivity implements FragmentManager.OnBackStackChangedListener {
+    public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
     private static ProgressDialog pd;
     static Context context;
     @Override
@@ -61,7 +59,7 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
         return super.onOptionsItemSelected(item);
     }
 
-    protected static void showProgress(final SocialNetwork socialNetwork, String message) {
+    protected static void showProgress(String message) {
         pd = new ProgressDialog(context);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pd.setMessage(message);
@@ -78,7 +76,7 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(MainFragment.SOCIAL_NETWORK_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }

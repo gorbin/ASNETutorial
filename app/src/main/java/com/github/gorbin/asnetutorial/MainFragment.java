@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MainFragment extends Fragment implements SocialNetworkManager.OnInitializationCompleteListener, OnLoginCompleteListener {
     public static SocialNetworkManager mSocialNetworkManager;
-    public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
     /**
      * SocialNetwork Ids in ASNE:
      * 1 - Twitter
@@ -67,7 +66,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
 
         //Use manager to manage SocialNetworks
-        mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
+        mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MainActivity.SOCIAL_NETWORK_TAG);
 
         //Check if manager exist
         if (mSocialNetworkManager == null) {
@@ -86,7 +85,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             mSocialNetworkManager.addSocialNetwork(liNetwork);
 
             //Initiate every network from mSocialNetworkManager
-            getFragmentManager().beginTransaction().add(mSocialNetworkManager, SOCIAL_NETWORK_TAG).commit();
+            getFragmentManager().beginTransaction().add(mSocialNetworkManager, MainActivity.SOCIAL_NETWORK_TAG).commit();
             mSocialNetworkManager.setOnInitializationCompleteListener(this);
         } else {
             //if manager exist - get and setup login only for initialized SocialNetworks
@@ -146,7 +145,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             if(!socialNetwork.isConnected()) {
                 if(networkId != 0) {
                     socialNetwork.requestLogin();
-                    MainActivity.showProgress(socialNetwork, "Loading social person");
+                    MainActivity.showProgress("Loading social person");
                 } else {
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();
                 }

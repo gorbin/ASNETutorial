@@ -42,7 +42,7 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
         SocialNetwork socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestGetFriendsCompleteListener(this);
         socialNetwork.requestGetFriends();
-        MainActivity.showProgress(socialNetwork, "Loading friends");
+        MainActivity.showProgress("Loading friends");
 
         return rootView;
     }

@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
         socialNetwork.requestCurrentPerson();
 
-        MainActivity.showProgress(socialNetwork, "Loading social person");
+        MainActivity.showProgress("Loading social person");
         return rootView;
     }
 
@@ -130,13 +130,9 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
             AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
             ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if(networkId != MainFragment.TWITTER){
-                        Bundle postParams = new Bundle();
-                        postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                        socialNetwork.requestPostLink(postParams, message, postingComplete);
-                    } else {
-                        socialNetwork.requestPostMessage(message + " " + link, postingComplete);
-                    }
+                    Bundle postParams = new Bundle();
+                    postParams.putString(SocialNetwork.BUNDLE_LINK, link);
+                    socialNetwork.requestPostLink(postParams, message, postingComplete);
                 }
             });
             ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
