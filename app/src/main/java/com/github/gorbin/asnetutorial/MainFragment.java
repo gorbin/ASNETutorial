@@ -11,12 +11,12 @@ import android.widget.Toast;
 import com.github.gorbin.asne.core.SocialNetwork;
 import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.github.gorbin.asne.core.listener.OnLoginCompleteListener;
-import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
-import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
-import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
+import com.github.gorbin.asne.odnoklassniki.OkSocialNetwork;
+import com.github.gorbin.asne.vk.VkSocialNetwork;
+import com.vk.sdk.VKScope;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import ru.ok.android.sdk.util.OkScope;
+
 import java.util.List;
 
 public class MainFragment extends Fragment implements SocialNetworkManager.OnInitializationCompleteListener, OnLoginCompleteListener {
@@ -31,12 +31,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
      * 6 - Odnoklassniki
      * 7 - Instagram
      */
-    public static final int TWITTER = 1;
-    public static final int LINKEDIN = 2;
-    public static final int FACEBOOK = 4;
-    private Button facebook;
-    private Button twitter;
-    private Button linkedin;
+    public static final int VK = 5;
+    public static final int OK = 6;
+    private Button vk;
+    private Button ok;
 
     public MainFragment() {
     }
@@ -47,23 +45,28 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         View rootView = inflater.inflate(R.layout.main_fragment, container, false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         // init buttons and set Listener
-        facebook = (Button) rootView.findViewById(R.id.facebook);
-        facebook.setOnClickListener(loginClick);
-        twitter = (Button) rootView.findViewById(R.id.twitter);
-        twitter.setOnClickListener(loginClick);
-        linkedin = (Button) rootView.findViewById(R.id.linkedin);
-        linkedin.setOnClickListener(loginClick);
+        vk = (Button) rootView.findViewById(R.id.vk);
+        vk.setOnClickListener(loginClick);
+        ok = (Button) rootView.findViewById(R.id.ok);
+        ok.setOnClickListener(loginClick);
 
         //Get Keys for initiate SocialNetworks
-        String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
-        String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
-        String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
-        String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
+        String VK_KEY = getActivity().getString(R.string.vk_app_id);
+        String OK_APP_ID = getActivity().getString(R.string.ok_app_id);
+        String OK_PUBLIC_KEY = getActivity().getString(R.string.ok_public_key);
+        String OK_SECRET_KEY = getActivity().getString(R.string.ok_secret_key);
 
         //Chose permissions
-        ArrayList<String> fbScope = new ArrayList<String>();
-        fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
-        String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
+        String[] okScope = new String[] {
+                OkScope.VALUABLE_ACCESS
+        };
+        String[] vkScope = new String[] {
+                VKScope.FRIENDS,
+                VKScope.WALL,
+                VKScope.PHOTOS,
+                VKScope.NOHTTPS,
+                VKScope.STATUS,
+        };
 
         //Use manager to manage SocialNetworks
         mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MainActivity.SOCIAL_NETWORK_TAG);
@@ -72,17 +75,13 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         if (mSocialNetworkManager == null) {
             mSocialNetworkManager = new SocialNetworkManager();
 
-            //Init and add to manager FacebookSocialNetwork
-            FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
-            mSocialNetworkManager.addSocialNetwork(fbNetwork);
+            //Init and add to manager VkSocialNetwork
+            VkSocialNetwork vkNetwork = new VkSocialNetwork(this, VK_KEY, vkScope);
+            mSocialNetworkManager.addSocialNetwork(vkNetwork);
 
-            //Init and add to manager TwitterSocialNetwork
-            TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
-            mSocialNetworkManager.addSocialNetwork(twNetwork);
-
-            //Init and add to manager LinkedInSocialNetwork
-            LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
-            mSocialNetworkManager.addSocialNetwork(liNetwork);
+            //Init and add to manager OkSocialNetwork
+            OkSocialNetwork okNetwork = new OkSocialNetwork(this, OK_APP_ID, OK_PUBLIC_KEY, OK_SECRET_KEY, okScope);
+            mSocialNetworkManager.addSocialNetwork(okNetwork);
 
             //Initiate every network from mSocialNetworkManager
             getFragmentManager().beginTransaction().add(mSocialNetworkManager, MainActivity.SOCIAL_NETWORK_TAG).commit();
@@ -103,14 +102,11 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     private void initSocialNetwork(SocialNetwork socialNetwork){
         if(socialNetwork.isConnected()){
             switch (socialNetwork.getID()){
-                case FACEBOOK:
-                    facebook.setText("Show Facebook profile");
+                case VK:
+                    vk.setText("Show VK profile");
                     break;
-                case TWITTER:
-                    twitter.setText("Show Twitter profile");
-                    break;
-                case LINKEDIN:
-                    linkedin.setText("Show LinkedIn profile");
+                case OK:
+                    ok.setText("Show Odnoklassniki profile");
                     break;
             }
         }
@@ -131,14 +127,11 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         public void onClick(View view) {
             int networkId = 0;
             switch (view.getId()){
-                case R.id.facebook:
-                    networkId = FACEBOOK;
+                case R.id.vk:
+                    networkId = VK;
                     break;
-                case R.id.twitter:
-                    networkId = TWITTER;
-                    break;
-                case R.id.linkedin:
-                    networkId = LINKEDIN;
+                case R.id.ok:
+                    networkId = OK;
                     break;
             }
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
@@ -158,7 +151,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     @Override
     public void onLoginSuccess(int networkId) {
         MainActivity.hideProgress();
-        startProfile(networkId);
+//        startProfile(networkId);
     }
 
     @Override
@@ -173,5 +166,6 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
                 .addToBackStack("profile")
                 .replace(R.id.container, profile)
                 .commit();
+//                .commitAllowingStateLoss();
     }
 }

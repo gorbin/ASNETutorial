@@ -166,17 +166,13 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
-            case 1:
-                color = getResources().getColor(R.color.twitter);
-                image = R.drawable.twitter_user;
+            case MainFragment.VK:
+                color = getResources().getColor(R.color.vk);
+                image = R.drawable.vk_user;
                 break;
-            case 2:
-                color = getResources().getColor(R.color.linkedin);
-                image = R.drawable.linkedin_user;
-                break;
-            case 4:
-                color = getResources().getColor(R.color.facebook);
-                image = R.drawable.com_facebook_profile_picture_blank_square;
+            case MainFragment.OK:
+                color = getResources().getColor(R.color.ok);
+                image = R.drawable.ok_user;
                 break;
         }
         frame.setBackgroundColor(color);

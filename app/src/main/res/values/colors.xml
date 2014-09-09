@@ -3,8 +3,7 @@
     <color name="grey_light">#FFCCCCCC</color>
     <color name="dark">#4b4b4b</color>
 
-    <color name="facebook">#3b5998</color>
-    <color name="twitter">#55ACEE</color>
-    <color name="linkedin">#287bbc</color>
+    <color name="vk">#36638e</color>
+    <color name="ok">#cf6700</color>
 
 </resources>

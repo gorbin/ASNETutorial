@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">ASNE-tutorial</string>
 
-    <string name="facebook_app_id">312054032307399</string>
-    <string name="twitter_consumer_key">8Gy3OKQMbKJ15BH0BferBNHEj</string>
-    <string name="twitter_consumer_secret">dSUHvkbS8xCwoS6lozPAFgDtIuKhTGkRW1OYXJqxBCMgKMyDX4</string>
-    <string name="linkedin_consumer_key">7523ssry5qk7rl</string>
-    <string name="linkedin_consumer_secret">sFyJf0ZW1lp31aGU</string>
+    <string name="vk_app_id">4542602</string>
+
+    <string name="ok_app_id">1096125440</string>
+    <string name="ok_public_key">CBANIGFCEBABABABA</string>
+    <string name="ok_secret_key">FF5161844C04525B64FA41A7</string>
 </resources>

@@ -8,28 +8,19 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Facebook"
-        android:id="@+id/facebook"
+        android:text="Login via VK"
+        android:id="@+id/vk"
         android:layout_gravity="center_horizontal"
-        android:background="#3b5998"
+        android:background="@color/vk"
         android:layout_margin="8dp"
         android:textColor="#ffffffff" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Twitter"
-        android:id="@+id/twitter"
+        android:text="Login via Odnoklassniki"
+        android:id="@+id/ok"
         android:layout_gravity="center_horizontal"
-        android:background="#55ACEE"
-        android:layout_margin="8dp"
-        android:textColor="#ffffffff"/>
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Login via LinkedIn"
-        android:id="@+id/linkedin"
-        android:layout_gravity="center_horizontal"
-        android:background="#287bbc"
+        android:background="@color/ok"
         android:layout_margin="8dp"
         android:textColor="#ffffffff"/>
 </LinearLayout>
