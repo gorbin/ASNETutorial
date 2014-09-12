@@ -20,6 +20,8 @@ import com.github.gorbin.asne.core.SocialNetwork;
 import com.github.gorbin.asne.core.listener.OnPostingCompleteListener;
 import com.github.gorbin.asne.core.listener.OnRequestSocialPersonCompleteListener;
 import com.github.gorbin.asne.core.persons.SocialPerson;
+import com.github.gorbin.asne.odnoklassniki.OkSocialNetwork;
+import com.github.gorbin.asne.vk.VkSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
@@ -166,11 +168,11 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
-            case MainFragment.VK:
+            case VkSocialNetwork.ID:
                 color = getResources().getColor(R.color.vk);
                 image = R.drawable.vk_user;
                 break;
-            case MainFragment.OK:
+            case OkSocialNetwork.ID:
                 color = getResources().getColor(R.color.ok);
                 image = R.drawable.ok_user;
                 break;

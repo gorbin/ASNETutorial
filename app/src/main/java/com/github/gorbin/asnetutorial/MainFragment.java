@@ -31,8 +31,6 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
      * 6 - Odnoklassniki
      * 7 - Instagram
      */
-    public static final int VK = 5;
-    public static final int OK = 6;
     private Button vk;
     private Button ok;
 
@@ -102,10 +100,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     private void initSocialNetwork(SocialNetwork socialNetwork){
         if(socialNetwork.isConnected()){
             switch (socialNetwork.getID()){
-                case VK:
+                case VkSocialNetwork.ID:
                     vk.setText("Show VK profile");
                     break;
-                case OK:
+                case OkSocialNetwork.ID:
                     ok.setText("Show Odnoklassniki profile");
                     break;
             }
@@ -128,10 +126,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             int networkId = 0;
             switch (view.getId()){
                 case R.id.vk:
-                    networkId = VK;
+                    networkId = VkSocialNetwork.ID;
                     break;
                 case R.id.ok:
-                    networkId = OK;
+                    networkId = OkSocialNetwork.ID;
                     break;
             }
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);

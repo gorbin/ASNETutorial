@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.gorbin.asne.core.persons.SocialPerson;
+import com.github.gorbin.asne.odnoklassniki.OkSocialNetwork;
+import com.github.gorbin.asne.vk.VkSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -73,11 +75,11 @@ public class FriendsListAdapter extends BaseAdapter {
     private void colorRow(int networkId){
         int color = context.getResources().getColor(R.color.dark);
         switch (networkId) {
-            case MainFragment.VK:
+            case VkSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.vk);
                 image = R.drawable.vk_user;
                 break;
-            case MainFragment.OK:
+            case OkSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.ok);
                 image = R.drawable.ok_user;
                 break;
