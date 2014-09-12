@@ -1,304 +1,307 @@
-ASNETutorial
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
 ============
 
-Simple example project for https://github.com/gorbin/ASNE library
+Пример применения библиотеки [ASNE](https://github.com/gorbin/ASNE)
 
-Today social network integration to your android application is common practice - it makes user easily login to your app and share their actions. There are a lot of way to do it - usually developers add native social network SDK or use API for every network. It provides login via installed social network application or native dialogs. You have to spend time and nerves to learn and use different social network SDKs.
+Во время разработки приложений на Андроид часта встает вопрос интеграции соц сетей в приложение - логин через социальную сеть, рассказать друзьям о приложении, просмотреть список друзей в приложении. Существует множество способов сделать это: 
+Подключить SDK или API социальной сети 
+Использование же oAuth запросов, но это не дает использовать возможности интеграции приложения с уже установленными приложениями социальных сетей - большинство пользователей социальных сетей используют и мобильные приложения
+Необходимо потратить время и нервы чтобы разобраться как использовать ту или иную социальную сеть, не говоря уже об ошибках или ограничениях от которых хочется вырвать все волосы на голове.
 
-What if you need to add one more social network for your application? Sometimes you have to reorganize or redo all your integrations. This leads to idea to create and implement common interface for all social networks. Fortunately there is an open source modular library [ASNE](https://github.com/gorbin/ASNE) that allows you to choose necessary social network and provides full sdk and common interface for most oftenly used requests(login, share, friendslist & etc) It saves your time and simplifies adding another networks in the future. Moreover you can easily add any other social network as new module - the similar way as it done in other modules. 
+//слишком рекламно
+А что если в уже давно рабочий проект необходимо добавить поддержку еще одной социальной сети? Иногда для этого потребуется переделать всю интеграцию социальных сетей, но отсутствие времени может привести к созданию велосипедов. В идеале неплохо бы создать общий интерфейс для работы со всеми социальными сетями. Для этого можно воспользоваться модулями библиотеки [ASNE](https://github.com/gorbin/ASNE). 
+Используя модуль библиотеки вы подключите SDK или API выбранной социальной сети и интерфейс для наиболее частых используемых [запросов к ней](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) тем самым сэкономив время и упростив добавление другой социальной сети. Библиотека так же позволяет просто использовать методы SDK социальной сети и предоставляет токены для составления запросов к ним. 
+Добавить социальную сеть как модуль, если ее нет в разработанных не составит труда - это легко сделать по аналогии с любым другим модулем. 
 
-In this tutorial you can learn how easily integrate Facebook, Twitter in android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with login, share link and showing friends list.
- 
+В данной статье я покажу как можно легко добавить поддержку VK и Odnoklassniki в андроид приложении используя соответсвующие [модули ASNE](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.asne%22). Это упрощенный пример включающий добавления логина, шаринга ссылки и вывода списка друзей.
 
-##Registering app - getting keys for your application
-In order to implement Social networks in your application you need keys to make API calls. So register a new social network application and get the keys. Check small tutorial how to get it:
+##Регистрация приложения в социальной сети
+Для добавления социальной сети в ваше приложение потребуется ключ для совершения запросов. Поэтому первым шагом необходимо зарегистрировать приложение - по ссылкам вы увидите краткое руководство по созданию приложения для
 
  - [VK](https://github.com/gorbin/ASNE/wiki/Create-Vkontakte-App)
  - [Odnoklassniki](https://github.com/gorbin/ASNE/wiki/Create-Odnoklassniki-App)
 
-To continue you need 
-- Facebook App ID 
-- Twitter consumer key and consumer secret
-- LinkedIn consumer key and consumer secret
+для продолжения вам необходимы ключи, которые используются в SDK социальных сетей 
+- VK App ID 
+- Ok App ID
+- Ok публичный ключ
+- Ok секретный ключ
 
-##Integrating Facebook, Twitter and LinkedIn to your application
 
-1. Create new Project in Android Studio
-2. Let's save our social network keys in `values/strings.xml`
+##Интеграция ВК и Одноклассники в приложение
+
+1. Создайте новый проект
+2. Сохраните ключи в `values/strings.xml`
     	
-    **strings.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/values/strings.xml))
+    **strings.xml**([source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/res/values/strings.xml))
      ```xml
     <?xml version="1.0" encoding="utf-8"?>
         <resources>
             <string name="app_name">ASNE-tutorial</string>
         
-            <string name="facebook_app_id">
-    	        1646388738920557
-            </string>
-            <string name="twitter_consumer_key">
-    	        BBQAUAVKYzmYtvEcNhUEvGiKd
-            </string>
-    			byZzHPxE1tkGmnPEj5zUyc7MG464Q1LgNRcwbBJV1Ap86575os
-    		</string>
-            <string name="linkedin_consumer_key">
-    	        75ubsp337ll7sf
-    	    </string>
-            <string name="linkedin_consumer_secret">
-    	        8DVk4hi3wvEyzjbh
-    	    </string>
+            <string name="vk_app_id">4542602</string>
+
+			<string name="ok_app_id">1096125440</string>
+			<string name="ok_public_key">CBANIGFCEBABABABA</string>
+			<string name="ok_secret_key">FF5161844C04525B64FA41A7</string>
         </resources>
     ```	
-3. Add permissions and meta data - open `AndroidManifest.xml` file and add uses-permission for INTERNET, ACCESS_NETWORK_STATE and add meta-data for facebook(add appId key)
+3. Добавим разрешения и активити для интегарции с Одноклассниками - откроем `AndroidManifest.xml` и добавим uses-permission - INTERNET, ACCESS_NETWORK_STATE и добавим ru.ok.android.sdk.OkAuthActivity
     
-    **AndroidManifest.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/AndroidManifest.xml))
+    **AndroidManifest.xml**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/AndroidManifest.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
-    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="asne_tutorial.githubgorbin.com.asne_tutorial" >
-    
-        <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    
-        <application
-            android:allowBackup="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
-            <activity
-                android:name=".MainActivity"
-                android:label="@string/app_name" >
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
-    
-            <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id"/>
-        </application>
-    
-    </manifest>
+	<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		package="com.github.gorbin.asnetutorial" >
+
+		<uses-permission android:name="android.permission.INTERNET" />
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+		<application
+			android:allowBackup="true"
+			android:icon="@drawable/ic_launcher"
+			android:label="@string/app_name"
+			android:theme="@style/AppTheme" >
+			<activity
+				android:name=".MainActivity"
+				android:label="@string/app_name" >
+				<intent-filter>
+					<action android:name="android.intent.action.MAIN" />
+					<category android:name="android.intent.category.LAUNCHER" />
+				</intent-filter>
+			</activity>
+
+			<activity
+				android:name="ru.ok.android.sdk.OkAuthActivity"
+				android:launchMode="singleTask"
+				android:configChanges="orientation">
+				<intent-filter>
+					<action android:name="android.intent.action.VIEW" />
+
+					<category android:name="android.intent.category.DEFAULT" />
+					<category android:name="android.intent.category.BROWSABLE" />
+
+					<data
+						android:host="ok1096125440"
+						android:scheme="okauth" />
+				</intent-filter>
+			</activity>
+		</application>
+
+
+	</manifest>
     ```
-4. Set dependecies for [asne-modules](https://github.com/gorbin/ASNE):
+4. Добавим зависимости для [модулей ASNE](https://github.com/gorbin/ASNE):
     
-    Open _Project Structure_ => choose your module and open _Dependecies_ => _Add new library dependency_
+    Например в Android Studio Откойте _Project Structure_ => выберите модуль приложения и откройте _Dependencies_ => _Add new library dependency_
 
  ![add library dependecy](http://i.imgur.com/4k62Ux1.png)
     
- Then search for `asne` and add **asne-facebook, asne-twitter, asne-linkedin**
+ Затем по запросу `asne` вы увидите все модули доступные в библиотеке и добавьте в зависимость **asne-vk, asne-odnoklassniki**
     
  ![search asne](http://i.imgur.com/gYou0Uf.png)
     
- or just add them manualy to `build.gradle`
+ либо вручную добавьте зависимоси в `build.gradle`
     
- **build.gradle**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/build.gradle))
+ **build.gradle**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/build.gradle))
     
  ```
  apply plugin: 'com.android.application'
 
-     android {
-        compileSdkVersion 19
-        buildToolsVersion '20.0.0'
-        
-        defaultConfig {
-            applicationId "asne_tutorial.githubgorbin.com.asne_tutorial"
-            minSdkVersion 10
-            targetSdkVersion 19
-            versionCode 1
-            versionName "1.0"
-        }
-        buildTypes {
-            release {
-                runProguard false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-        }
+ android {
+     compileSdkVersion 19
+     buildToolsVersion '20.0.0'
+ 
+     defaultConfig {
+         applicationId "com.github.gorbin.asnetutorial"
+         minSdkVersion 10
+         targetSdkVersion 19
+         versionCode 1
+         versionName "1.0"
      }
-    
-    dependencies {
-        compile fileTree(include: ['*.jar'], dir: 'libs')
-        compile 'com.android.support:appcompat-v7:20.0.0'
-        compile 'com.github.asne:asne-facebook:0.2.1'
-        compile 'com.github.asne:asne-linkedin:0.2.1'
-        compile 'com.github.asne:asne-twitter:0.2.1'
-    }
+     buildTypes {
+         release {
+             runProguard false
+             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         }
+     }
+ }
+
+ dependencies {
+     compile fileTree(include: ['*.jar'], dir: 'libs')
+     compile 'com.android.support:appcompat-v7:20.0.0'
+     compile 'com.github.asne:asne-vk:0.2.1'
+     compile 'com.github.asne:asne-odnoklassniki:0.2.1'
+ }
  ```
-5. Lets create some layouts
-  Just login buttons in main fragment
- **main_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/main_fragment.xml))
+5. Теперь немного украсим наше приложение
+  В главном фрагменте расположим 2 кнопки отвечающие за логин в социальные сети
+ **main_fragment.xml**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/res/layout/main_fragment.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFCCCCCC">
-    
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Login via Facebook"
-            android:id="@+id/facebook"
-            android:layout_gravity="center_horizontal"
-            android:background="#3b5998"
-            android:layout_margin="8dp"
-            android:textColor="#ffffffff" />
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Login via Twitter"
-            android:id="@+id/twitter"
-            android:layout_gravity="center_horizontal"
-            android:background="#55ACEE"
-            android:layout_margin="8dp"
-            android:textColor="#ffffffff"/>
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Login via LinkedIn"
-            android:id="@+id/linkedin"
-            android:layout_gravity="center_horizontal"
-            android:background="#287bbc"
-            android:layout_margin="8dp"
-            android:textColor="#ffffffff"/>
-    </LinearLayout>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#FFCCCCCC">
+
+		<Button
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Login via VK"
+			android:id="@+id/vk"
+			android:layout_gravity="center_horizontal"
+			android:background="@color/vk"
+			android:layout_margin="8dp"
+			android:textColor="#ffffffff" />
+		<Button
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Login via Odnoklassniki"
+			android:id="@+id/ok"
+			android:layout_gravity="center_horizontal"
+			android:background="@color/ok"
+			android:layout_margin="8dp"
+			android:textColor="#ffffffff"/>
+	</LinearLayout>
     ```
- Create simple profile card for user
-    **profile_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/layout/profile_fragment.xml))
+ Зададим внешний вид профиля пользователя
+    **profile_fragment.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/res/layout/profile_fragment.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/grey_light">
-    
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="8dp"
-            android:id="@+id/frame"
-            android:background="@color/dark">
-    
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="3dp"
-                android:id="@+id/card"
-                android:background="#FFFFFF">
-    
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/imageView"
-                    android:layout_margin="8dp"
-                    android:padding="2dp"
-                    android:background="@color/grey_light"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:src="@drawable/user"
-                    android:adjustViewBounds="true"
-                    android:cropToPadding="true"
-                    android:scaleType="centerCrop"/>
-    
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="NoName"
-                    android:maxLines="3"
-                    android:singleLine="false"
-                    android:id="@+id/name"
-                    android:padding="8dp"
-                    android:layout_alignTop="@+id/imageView"
-                    android:layout_toRightOf="@+id/imageView"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-    
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:maxLines="3"
-                    android:singleLine="false"
-                    android:id="@+id/id"
-                    android:padding="8dp"
-                    android:layout_below="@+id/name"
-                    android:layout_alignLeft="@+id/name"
-                    android:layout_alignStart="@+id/name" />
-    
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/info"
-                    android:padding="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_below="@+id/imageView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
-    
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonLayout"
-                android:layout_below="@+id/card"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:background="@color/grey_light">
-    
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Friends"
-                    android:id="@+id/friends"
-                    android:padding="8dp"
-                    android:background="@color/dark"
-                    android:layout_marginRight="1dp"
-                    android:layout_weight="1"
-                    android:textColor="#ffffffff"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Share"
-                    android:id="@+id/share"
-                    android:padding="8dp"
-                    android:background="@color/dark"
-                    android:layout_weight="1"
-                    android:textColor="#ffffffff"/>
-            </LinearLayout>
-        </RelativeLayout>
-    
-    </ScrollView>
+
+	<ScrollView
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="@color/grey_light">
+
+		<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true"
+			android:layout_margin="8dp"
+			android:id="@+id/frame"
+			android:background="@color/dark">
+
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentStart="true"
+				android:layout_margin="3dp"
+				android:id="@+id/card"
+				android:background="#FFFFFF">
+
+				<ImageView
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:id="@+id/imageView"
+					android:layout_margin="8dp"
+					android:padding="2dp"
+					android:background="@color/grey_light"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:src="@drawable/user"
+					android:adjustViewBounds="true"
+					android:cropToPadding="true"
+					android:scaleType="centerCrop"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:text="NoName"
+					android:maxLines="3"
+					android:singleLine="false"
+					android:id="@+id/name"
+					android:padding="8dp"
+					android:layout_alignTop="@+id/imageView"
+					android:layout_toRightOf="@+id/imageView"
+					android:layout_toEndOf="@+id/imageView"
+					android:layout_alignParentRight="true"
+					android:layout_alignParentEnd="true" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="null"
+					android:maxLines="3"
+					android:singleLine="false"
+					android:id="@+id/id"
+					android:padding="8dp"
+					android:layout_below="@+id/name"
+					android:layout_alignLeft="@+id/name"
+					android:layout_alignStart="@+id/name" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text=""
+					android:id="@+id/info"
+					android:padding="8dp"
+					android:layout_marginBottom="4dp"
+					android:layout_below="@+id/imageView"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true" />
+
+			</RelativeLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/buttonLayout"
+				android:layout_below="@+id/card"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentRight="true"
+				android:gravity="center"
+				android:background="@color/grey_light">
+
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:text="Friends"
+					android:id="@+id/friends"
+					android:padding="8dp"
+					android:background="@color/dark"
+					android:layout_marginRight="1dp"
+					android:layout_weight="1"
+					android:textColor="#ffffffff"/>
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:text="Share"
+					android:id="@+id/share"
+					android:padding="8dp"
+					android:background="@color/dark"
+					android:layout_weight="1"
+					android:textColor="#ffffffff"/>
+			</LinearLayout>
+		</RelativeLayout>
+
+	</ScrollView>
     ```
 
- and save socialnetworks colors to
+ и сохраним цвета социальных сетей
 
- **color.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/values/colors.xml))
+ **color.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/res/values/colors.xml))
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <color name="grey_light">#FFCCCCCC</color>
-        <color name="dark">#4b4b4b</color>
-        <color name="facebook">#3b5998</color>
-        <color name="twitter">#55ACEE</color>
-        <color name="linkedin">#287bbc</color>
-    </resources>
+	<resources>
+		<color name="grey_light">#FFCCCCCC</color>
+		<color name="dark">#4b4b4b</color>
+
+		<color name="vk">#36638e</color>
+		<color name="ok">#cf6700</color>
+	</resources>
     ```
     
-6. Let's setup `MainActivity.java` We should setup `onActivityResult` method to catch responses after requesting login
+6. Теперь в `MainActivity.java` необходимо в `onActivityResult` ловить ответ после запроса логина
 
-    **MainActivity.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainActivity.java))
+    **MainActivity.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainActivity.java))
     
  ```java
     public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
@@ -312,74 +315,60 @@ To continue you need
         }
     }
  ```
- After every login form social networks send `onActivityResult` and we should check it and send to our `SocialNetworkManager` which deliver it to right `SocialNetwork`
+ При обработке запроса логина социальная сеть отправляет `onActivityResult` проверяем его отправляем в `SocialNetworkManager` который передаст его в соответствующую `SocialNetwork`
  
-7. Create `MainFragment.java` and begin transaction of this fragmetn in `MainActivity.java`
+7. Теперь интегрируем социальную сеть в `MainFragment.java` - это просто:
 
-    **MainActivity.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainActivity.java))
+    * Достанем ключи социальных сетей из `values.xml`
     
     ```java
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new MainFragment())
-                .commit();
-        }
-    
-    }
+    String VK_KEY = getActivity().getString(R.string.vk_app_id);
+    String OK_APP_ID = getActivity().getString(R.string.ok_app_id);
+    String OK_PUBLIC_KEY = getActivity().getString(R.string.ok_public_key);
+    String OK_SECRET_KEY = getActivity().getString(R.string.ok_secret_key);
     ```
-    
-8. Integrating of any social network is simple:
-
-    * Get `SocialNetworkManager`
+	
+	* Получим `SocialNetworkManager`
     
     ```java
     mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MAinActivity.SOCIAL_NETWORK_TAG);
     ```
     
-    * Get keys from `values.xml` - note Facebook appId we used in `AndroidManifest.xml`
+    * Создадим `SocialNetworks` с соответствующими разрешениями
     
     ```java
-    String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
-    String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
-    String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
-    String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
-    ```
-    * Create chosen `SocialNetworks` with permissions
-    
-    ```java
-    ArrayList<String> fbScope = new ArrayList<String>();
-    fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
-    FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
+    String[] vkScope = new String[] {
+        VKScope.FRIENDS,
+        VKScope.WALL,
+		VKScope.PHOTOS,
+        VKScope.NOHTTPS,
+        VKScope.STATUS,
+    };
+    VkSocialNetwork vkNetwork = new VkSocialNetwork(this, VK_KEY, vkScope);
 
-    // permissions for twitter in developer twitter console
-    TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
-
-    String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
-    LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
+    String[] okScope = new String[] {
+        OkScope.VALUABLE_ACCESS
+    };
+    OkSocialNetwork okNetwork = new OkSocialNetwork(this, OK_APP_ID, OK_PUBLIC_KEY, OK_SECRET_KEY, okScope);
         
     ```
     
-    * Check if `SocialNetworkManager` is null init it and add `SocialNetworks` to it
+    * Проверим существует ли `SocialNetworkManager` 
+	 * Если не существует зададим его и добавим в него `SocialNetworks`
     
     ```java
     mSocialNetworkManager = new SocialNetworkManager();
     
-    mSocialNetworkManager.addSocialNetwork(fbNetwork);
-    mSocialNetworkManager.addSocialNetwork(twNetwork);
-    mSocialNetworkManager.addSocialNetwork(liNetwork);
+    mSocialNetworkManager.addSocialNetwork(vkNetwork);
+    mSocialNetworkManager.addSocialNetwork(okNetwork);
     
     //Initiate every network from mSocialNetworkManager
     getFragmentManager().beginTransaction().add(mSocialNetworkManager, MAinActivity.SOCIAL_NETWORK_TAG).commit();
     mSocialNetworkManager.setOnInitializationCompleteListener(this);
     ```
-    don't forget to implement `SocialNetworkManager.OnInitializationCompleteListener`
+    не забудьте добавить `SocialNetworkManager.OnInitializationCompleteListener`
      
-    * If `SocialNetworkManager` - come from another fragment where we alredy init it - get all initialized social networks and add to them neccessary listeners 
+     * Если `SocialNetworkManager` существует - задали в activity или другом фрагменте - выберем все инициализированные социальные сети и установим им `OnLoginCompleteListener`
     
     ```java
     if(!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
@@ -388,8 +377,7 @@ To continue you need
             socialNetwork.setOnLoginCompleteListener(this);
         }
     ```
-    don't forget to implement `OnLoginCompleteListener`
-    * Now we need to catch callback after initializing of `SocialNetworks`
+    * Теперь необходимо обработать callback инициации `SocialNetworks`
     
     ```java
     @Override
@@ -400,11 +388,11 @@ To continue you need
         }
     }
     ```
-    don't forget to implement `OnLoginCompleteListener`
+    не забудьте добавить `OnLoginCompleteListener`
     
- Full `onCreateView` and `onSocialNetworkManagerInitialized` from MainFragment with initializing and setting listener to buttons
+ Весь исходный код `onCreateView` и `onSocialNetworkManagerInitialized` из `MainFragment` инициацией социальных сетей и установкой listenerов
     
-    **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
+    **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
     
     ```java
     public static SocialNetworkManager mSocialNetworkManager;
@@ -418,13 +406,10 @@ To continue you need
      * 6 - Odnoklassniki
      * 7 - Instagram
      */
-    public static final int TWITTER = 1;
-    public static final int LINKEDIN = 2;
-    public static final int FACEBOOK = 4;
-    
-    private Button facebook;
-    private Button twitter;
-    private Button linkedin;
+    public static final int VK = 5;
+    public static final int OK = 6;
+    private Button vk;
+    private Button ok;
 
     public MainFragment() {
     }
@@ -435,45 +420,46 @@ To continue you need
         View rootView = inflater.inflate(R.layout.main_fragment, container, false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         // init buttons and set Listener
-        facebook = (Button) rootView.findViewById(R.id.facebook);
-        facebook.setOnClickListener(loginClick);
-        twitter = (Button) rootView.findViewById(R.id.twitter);
-        twitter.setOnClickListener(loginClick);
-        linkedin = (Button) rootView.findViewById(R.id.linkedin);
-        linkedin.setOnClickListener(loginClick);
+        vk = (Button) rootView.findViewById(R.id.vk);
+        vk.setOnClickListener(loginClick);
+        ok = (Button) rootView.findViewById(R.id.ok);
+        ok.setOnClickListener(loginClick);
 
         //Get Keys for initiate SocialNetworks
-        String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
-        String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
-        String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
-        String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
+        String VK_KEY = getActivity().getString(R.string.vk_app_id);
+        String OK_APP_ID = getActivity().getString(R.string.ok_app_id);
+        String OK_PUBLIC_KEY = getActivity().getString(R.string.ok_public_key);
+        String OK_SECRET_KEY = getActivity().getString(R.string.ok_secret_key);
 
         //Chose permissions
-        ArrayList<String> fbScope = new ArrayList<String>();
-        fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
-        String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
+        String[] okScope = new String[] {
+                OkScope.VALUABLE_ACCESS
+        };
+        String[] vkScope = new String[] {
+                VKScope.FRIENDS,
+                VKScope.WALL,
+                VKScope.PHOTOS,
+                VKScope.NOHTTPS,
+                VKScope.STATUS,
+        };
 
         //Use manager to manage SocialNetworks
-        mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
+        mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MainActivity.SOCIAL_NETWORK_TAG);
 
         //Check if manager exist
         if (mSocialNetworkManager == null) {
             mSocialNetworkManager = new SocialNetworkManager();
 
-            //Init and add to manager FacebookSocialNetwork
-            FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
-            mSocialNetworkManager.addSocialNetwork(fbNetwork);
+            //Init and add to manager VkSocialNetwork
+            VkSocialNetwork vkNetwork = new VkSocialNetwork(this, VK_KEY, vkScope);
+            mSocialNetworkManager.addSocialNetwork(vkNetwork);
 
-            //Init and add to manager TwitterSocialNetwork
-            TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
-            mSocialNetworkManager.addSocialNetwork(twNetwork);
-
-            //Init and add to manager LinkedInSocialNetwork
-            LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
-            mSocialNetworkManager.addSocialNetwork(liNetwork);
+            //Init and add to manager OkSocialNetwork
+            OkSocialNetwork okNetwork = new OkSocialNetwork(this, OK_APP_ID, OK_PUBLIC_KEY, OK_SECRET_KEY, okScope);
+            mSocialNetworkManager.addSocialNetwork(okNetwork);
 
             //Initiate every network from mSocialNetworkManager
-            getFragmentManager().beginTransaction().add(mSocialNetworkManager, SOCIAL_NETWORK_TAG).commit();
+            getFragmentManager().beginTransaction().add(mSocialNetworkManager, MainActivity.SOCIAL_NETWORK_TAG).commit();
             mSocialNetworkManager.setOnInitializationCompleteListener(this);
         } else {
             //if manager exist - get and setup login only for initialized SocialNetworks
@@ -491,19 +477,15 @@ To continue you need
     private void initSocialNetwork(SocialNetwork socialNetwork){
         if(socialNetwork.isConnected()){
             switch (socialNetwork.getID()){
-                case FACEBOOK:
-                    facebook.setText("Show Facebook profile");
+                case VK:
+                    vk.setText("Show VK profile");
                     break;
-                case TWITTER:
-                    twitter.setText("Show Twitter profile");
-                    break;
-                case LINKEDIN:
-                    linkedin.setText("Show LinkedIn profile");
+                case OK:
+                    ok.setText("Show Odnoklassniki profile");
                     break;
             }
         }
     }
-    
     @Override
     public void onSocialNetworkManagerInitialized() {
         //when init SocialNetworks - get and setup login only for initialized SocialNetworks
@@ -515,17 +497,16 @@ To continue you need
     ```
 ![MainFragment](http://imgur.com/i22fMz3.png)
     
-9. Request login for every social networks
+8. Запросим логин в каждой социальной сети
     
     ```java
     SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
-    socialNetwork.requestLogin();
-    
+    socialNetwork.requestLogin();   
     ```
     
- Full `OnClickListener` loginClick with checking connection of social network and if social network connected - show `ProfileFragment.java` on click
+ Весь исходный код `OnClickListener` loginClick с проверкой состояния подключения к социальной сети, если социальная сеть подключена - откроем `ProfileFragment.java`
  
-     **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
+     **MainFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
 
     ```java
     private View.OnClickListener loginClick = new View.OnClickListener() {
@@ -533,21 +514,18 @@ To continue you need
         public void onClick(View view) {
             int networkId = 0;
             switch (view.getId()){
-                case R.id.facebook:
-                    networkId = FACEBOOK;
+                case R.id.vk:
+                    networkId = VK;
                     break;
-                case R.id.twitter:
-                    networkId = TWITTER;
-                    break;
-                case R.id.linkedin:
-                    networkId = LINKEDIN;
+                case R.id.ok:
+                    networkId = OK;
                     break;
             }
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
             if(!socialNetwork.isConnected()) {
                 if(networkId != 0) {
                     socialNetwork.requestLogin();
-                    MainActivity.showProgress(socialNetwork, "Loading social person");
+                    MainActivity.showProgress("Loading social person");
                 } else {
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();
                 }
@@ -559,36 +537,41 @@ To continue you need
     
     ```
 
-10. After social network login form we got callback `onLoginSuccess(int networkId)` or `onError(int networkId, String requestID, String errorMessage, Object data)` - lets show profile if login success and show Toast on error
+9. После заполнения логина или обработки логина приложением социальной сети получим `onLoginSuccess(int networkId)` или `onError(int networkId, String requestID, String errorMessage, Object data)` - выведем соответствующее сообщение 
     
- **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
+ **MainFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
 
     ```java
     @Override
     public void onLoginSuccess(int networkId) {
         MainActivity.hideProgress();
-        startProfile(networkId);
+		Toast.makeText(getActivity(), "Login Success", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onError(int networkId, String requestID, String errorMessage, Object data) {
         MainActivity.hideProgress();
         Toast.makeText(getActivity(), "ERROR: " + errorMessage, Toast.LENGTH_LONG).show();
-    }
+    }   
+    ```
+	
+10. Откроем `ProfileFragment.java` с помощью метода:
 
+ **MainFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
+
+    ```java
     private void startProfile(int networkId){
         ProfileFragment profile = ProfileFragment.newInstannce(networkId);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .addToBackStack("profile")
                 .replace(R.id.container, profile)
                 .commit();
-    }
-    
+    } 
     ```
-    
-11. In `ProfileFragment.java` setup get networkId from `MainFragment.java`  
+	
+11. В `ProfileFragment.java` получим идетификатор социальной сети из `MainFragment.java`  
 
- **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
+ **ProfileFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
     public static ProfileFragment newInstannce(int id) {
         ProfileFragment fragment = new ProfileFragment();
@@ -606,17 +589,17 @@ To continue you need
     }
     ```
     
-12. Now via `networkId` we can get social network and request current user profile like:
+12. Теперь с помощью `networkId` мы выберем социальную сеть и запросим данные профиля текущего пользователя следующим образом:
 
     ```java
     socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
     socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
     socialNetwork.requestCurrentPerson();
     ```
- don't forget to implement `OnRequestSocialPersonCompleteListener` 
-13. After compleating request we can use SocialPerson dadta to fill our profile view
+ не забудьте добавить `OnRequestSocialPersonCompleteListener` 
+13. После обработки запроса мы можеи использовать полученный объект `SocialPerson` для заполнения профиля пользователя в приложении, либо вывести ошибку при неудаче
 
- **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
+ **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
     @Override
     public void onRequestSocialPersonSuccess(int i, SocialPerson socialPerson) {
@@ -638,39 +621,48 @@ To continue you need
     }
     ```
 ![MainFragment](http://imgur.com/b9c0VZr.png)    
-14. For logout you just need to use 
-```java
-socialNetwork.logout();
-getActivity().getSupportFragmentManager().popBackStack();
-```
-15. Trully, that's all - we integrate Facebook, Twitter and Linkedin and get user profile. You can add other social networks like Instagram or Google Plus just adding dependency for them and adding them to `SocialNetworkManager` like in step 8:
+14. Для выхода из социальной сети необходимо использовать метод `logout()` 
  ```java
+ socialNetwork.logout();
+ getActivity().getSupportFragmentManager().popBackStack();
+ ```
+15. И честно говоря это все - добавили ВК и Одноклассники в приложение. Аналогично вы можете добавить и другие социальные сети Facebook, Twitter, Linkedin, Instagram или Google Plus лишь добавив соответствующую зависимость и добавив их в `SocialNetworkManager` как в шаге 8:
+ ```java
+    FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
+    mSocialNetworkManager.addSocialNetwork(fbNetwork);
+
+    TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
+    mSocialNetworkManager.addSocialNetwork(twNetwork);
+
+    LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
+    mSocialNetworkManager.addSocialNetwork(liNetwork);
+
     GooglePlusSocialNetwork gpNetwork = new GooglePlusSocialNetwork(this);
     mSocialNetworkManager.addSocialNetwork(gpNetwork);
-
-    InstagramSocialNetwork instagramNetwork = new InstagramSocialNetwork(this, INSTAGRAM_CLIENT_KEY, INSTAGRAM_CLIENT_SECRET, instagramScope);
+	
+	InstagramSocialNetwork instagramNetwork = new InstagramSocialNetwork(this, INSTAGRAM_CLIENT_KEY, INSTAGRAM_CLIENT_SECRET, instagramScope);
     mSocialNetworkManager.addSocialNetwork(instagramNetwork);
  ```
- And of course you can use any other request which we use bellow for them
+ И конечно же вы можете использовать выше описанные методы для раобты с ними
  
-14. In this tutorial we make some more requests **Share link** and **Get user friendslist**
+14. Но давайте разберем еще несколько запросов **Share link** и **Get user friendslist**
  
- Let's **share** simple link via social network:
- * Setup share button
+ Давайте **share** ссылку с помощью социальной сети:
+ * Настройим кнопку
  
      ```java
      share = (Button) rootView.findViewById(R.id.share);
      share.setOnClickListener(shareClick);
      ```
 
- * To share we neet fill bundle and  just request post link
+ * Для отправки ссылки на стену пользователя нам необходимо ее передать в Bundle
 
       ```java
       Bundle postParams = new Bundle();
       postParams.putString(SocialNetwork.BUNDLE_LINK, link);
       socialNetwork.requestPostLink(postParams, message, postingComplete);
       ```
- * And of course some actions to callback
+ * И конечно же обработать ответы
 
         ```java
         private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
@@ -685,64 +677,49 @@ getActivity().getSupportFragmentManager().popBackStack();
             }
         };
         ```
- * So `OnClickListener` shareClick is
+ * Итак в `OnClickListener shareClick` покажем пользователю простой диалог в котором спросим хочет ли он расшарить ссылку и если да отправим ее
  
-        **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
+        **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
       ```java
         private View.OnClickListener shareClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
-                ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if(networkId != MainFragment.TWITTER){
-                            Bundle postParams = new Bundle();
-                            postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                            socialNetwork.requestPostLink(postParams, message, postingComplete);
-                        } else {
-                            socialNetwork.requestPostMessage(message + " " + link, postingComplete);
-                        }
-                    }
-                });
-                ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        dialog.cancel();
-                    }
-                });
-                ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        dialog.cancel();
-                    }
-                });
-                ad.create().show();
-            }
-        };
-
-        private AlertDialog.Builder alertDialogInit(String title, String message){
-            AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-            ad.setTitle(title);
-            ad.setMessage(message);
-            ad.setCancelable(true);
-            return ad;
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
+            ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Bundle postParams = new Bundle();
+                    postParams.putString(SocialNetwork.BUNDLE_LINK, link);
+                    socialNetwork.requestPostLink(postParams, message, postingComplete);
+                }
+            });
+            ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.cancel();
+                }
+            });
+            ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                public void onCancel(DialogInterface dialog) {
+                    dialog.cancel();
+                }
+            });
+            ad.create().show();
         }
+    };
       ```
       
   ![Share](http://imgur.com/DX5oj68.png)
 
-  Here we make standart alert dialog to notify user that we want to share link and in PositiveButton we check if it is not Twitter(there are no method in twitter api to post link, but we can post message as message + link)
-
-  Let's get **friendslist** via social network:   
-  * Get social network id
-  * Get `SocialNetwork` from Id and request get freinds
+  Теперь выведем список друзей пользователя:   
+  * Получим `SocialNetwork` из идентификатора социальной сети запросим список друзей
 
         ```java
         SocialNetwork socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestGetFriendsCompleteListener(this);
         socialNetwork.requestGetFriends();
         ```
-    don't forget to implement `OnRequestGetFriendsCompleteListener` 
- * Get response
+    не забудьте добавить `OnRequestGetFriendsCompleteListener` 
+ * Обработаем ответ
 
         ```java
         @Override
@@ -766,17 +743,20 @@ getActivity().getSupportFragmentManager().popBackStack();
 
  ![Friends](http://imgur.com/VvOfgAN.png)
  
- More detailed you can read in [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
+ Подробнее вы можете изучит в [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
 
-##Conclusion
-Using ASNE modules you can easily and quicly integrate any popular social networks and use common requests in your app. Ofcourse library got [more methods](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) which you can use in your application. But in case if you want to use social network methods from SDK or API you can easily get accesstokens or get instancesof main object in your App
+##Итог
+Используя модули библиотеки ASNE вы легко и быстро интегрируете любую популярную социальную сеть в приложение. Конечно же в библиотеке содержится [больше методов](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) которые возможно пригодятся в вашем приложении. А в случае необходимости использовать методы SDK вы можете получить токен или объект SDK и написать свой метод
 
-This is simple tutorial demom if you need more complex - [check ASNE demo app](https://github.com/gorbin/ASNE)
+Если данное приложение вам показалось простым вы можете посмотерть реализацию всех методов - [тут](https://github.com/gorbin/ASNE)
 
-Source code: 
-
-[GitHub](https://github.com/gorbin/ASNETutorial) 
-
+Код проекта: 
+[GitHub](https://github.com/gorbin/ASNETutorial)
 [Zip](https://github.com/gorbin/ASNETutorial/archive/master.zip)
+    
+Статья по подключению Facebook, Twitter and LinkedIn на [codeproject.com](http://www.codeproject.com/Articles/815900/Android-social-network-integration)    
+
+В данный момент библиотека дорабатывается и я буду рад вашим советам или помощи в разработке.
+В ближайшее время напишу статью по подключению социальных сетей как модулей и подключу азиатскую социальную сеть. А так же все не доходят руки до javdoc и тестов
     
     
