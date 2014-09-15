@@ -3,17 +3,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
 
 Пример применения библиотеки [ASNE](https://github.com/gorbin/ASNE)
 
-Во время разработки приложений на Андроид часта встает вопрос интеграции соц сетей в приложение - логин через социальную сеть, рассказать друзьям о приложении, просмотреть список друзей в приложении. Существует множество способов сделать это: 
-Подключить SDK или API социальной сети 
-Использование же oAuth запросов, но это не дает использовать возможности интеграции приложения с уже установленными приложениями социальных сетей - большинство пользователей социальных сетей используют и мобильные приложения
-Необходимо потратить время и нервы чтобы разобраться как использовать ту или иную социальную сеть, не говоря уже об ошибках или ограничениях от которых хочется вырвать все волосы на голове.
-
-//слишком рекламно
-А что если в уже давно рабочий проект необходимо добавить поддержку еще одной социальной сети? Иногда для этого потребуется переделать всю интеграцию социальных сетей, но отсутствие времени может привести к созданию велосипедов. В идеале неплохо бы создать общий интерфейс для работы со всеми социальными сетями. Для этого можно воспользоваться модулями библиотеки [ASNE](https://github.com/gorbin/ASNE). 
-Используя модуль библиотеки вы подключите SDK или API выбранной социальной сети и интерфейс для наиболее частых используемых [запросов к ней](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) тем самым сэкономив время и упростив добавление другой социальной сети. Библиотека так же позволяет просто использовать методы SDK социальной сети и предоставляет токены для составления запросов к ним. 
-Добавить социальную сеть как модуль, если ее нет в разработанных не составит труда - это легко сделать по аналогии с любым другим модулем. 
-
-В данной статье я покажу как можно легко добавить поддержку VK и Odnoklassniki в андроид приложении используя соответсвующие [модули ASNE](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.asne%22). Это упрощенный пример включающий добавления логина, шаринга ссылки и вывода списка друзей.
+В данной статье я покажу как можно легко добавить поддержку VK и Odnoklassniki в андроид приложении, используя соответсвующие [модули ASNE](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.asne%22). Это упрощенный пример, включающий добавления логина, шаринга ссылки и вывода списка друзей.
 
 ##Регистрация приложения в социальной сети
 Для добавления социальной сети в ваше приложение потребуется ключ для совершения запросов. Поэтому первым шагом необходимо зарегистрировать приложение - по ссылкам вы увидите краткое руководство по созданию приложения для
@@ -87,8 +77,6 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
 				</intent-filter>
 			</activity>
 		</application>
-
-
 	</manifest>
     ```
 4. Добавим зависимости для [модулей ASNE](https://github.com/gorbin/ASNE):
@@ -315,7 +303,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
         }
     }
  ```
- При обработке запроса логина социальная сеть отправляет `onActivityResult` проверяем его отправляем в `SocialNetworkManager` который передаст его в соответствующую `SocialNetwork`
+ При обработке запроса логина социальная сеть отправляет `onActivityResult` проверяем его, отправляем в `SocialNetworkManager`, который передаст его в соответствующую `SocialNetwork`
  
 7. Теперь интегрируем социальную сеть в `MainFragment.java` - это просто:
 
@@ -356,27 +344,27 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     * Проверим существует ли `SocialNetworkManager` 
 	 * Если не существует зададим его и добавим в него `SocialNetworks`
     
-    ```java
-    mSocialNetworkManager = new SocialNetworkManager();
+        ```java
+        mSocialNetworkManager = new SocialNetworkManager();
     
-    mSocialNetworkManager.addSocialNetwork(vkNetwork);
-    mSocialNetworkManager.addSocialNetwork(okNetwork);
+        mSocialNetworkManager.addSocialNetwork(vkNetwork);
+        mSocialNetworkManager.addSocialNetwork(okNetwork);
     
-    //Initiate every network from mSocialNetworkManager
-    getFragmentManager().beginTransaction().add(mSocialNetworkManager, MAinActivity.SOCIAL_NETWORK_TAG).commit();
-    mSocialNetworkManager.setOnInitializationCompleteListener(this);
-    ```
+        //Initiate every network from mSocialNetworkManager
+        getFragmentManager().beginTransaction().add(mSocialNetworkManager, MAinActivity.SOCIAL_NETWORK_TAG).commit();
+        mSocialNetworkManager.setOnInitializationCompleteListener(this);
+        ```
     не забудьте добавить `SocialNetworkManager.OnInitializationCompleteListener`
      
      * Если `SocialNetworkManager` существует - задали в activity или другом фрагменте - выберем все инициализированные социальные сети и установим им `OnLoginCompleteListener`
     
-    ```java
-    if(!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
-        List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
-        for (SocialNetwork socialNetwork : socialNetworks) {
-            socialNetwork.setOnLoginCompleteListener(this);
-        }
-    ```
+        ```java
+         if(!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
+            List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
+            for (SocialNetwork socialNetwork : socialNetworks) {
+                socialNetwork.setOnLoginCompleteListener(this);
+            }
+        ```
     * Теперь необходимо обработать callback инициации `SocialNetworks`
     
     ```java
@@ -597,7 +585,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     socialNetwork.requestCurrentPerson();
     ```
  не забудьте добавить `OnRequestSocialPersonCompleteListener` 
-13. После обработки запроса мы можеи использовать полученный объект `SocialPerson` для заполнения профиля пользователя в приложении, либо вывести ошибку при неудаче
+13. После обработки запроса мы можем использовать полученный объект `SocialPerson` для заполнения профиля пользователя в приложении, либо вывести ошибку при неудаче
 
  **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
@@ -626,7 +614,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
  socialNetwork.logout();
  getActivity().getSupportFragmentManager().popBackStack();
  ```
-15. И честно говоря это все - добавили ВК и Одноклассники в приложение. Аналогично вы можете добавить и другие социальные сети Facebook, Twitter, Linkedin, Instagram или Google Plus лишь добавив соответствующую зависимость и добавив их в `SocialNetworkManager` как в шаге 8:
+15. И, честно говоря, это все - добавили ВК и Одноклассники в приложение. Аналогично вы можете добавить и другие социальные сети Facebook, Twitter, Linkedin, Instagram или Google Plus лишь добавив соответствующую зависимость и добавив их в `SocialNetworkManager` как в шаге 8:
  ```java
     FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
     mSocialNetworkManager.addSocialNetwork(fbNetwork);
@@ -677,7 +665,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
             }
         };
         ```
- * Итак в `OnClickListener shareClick` покажем пользователю простой диалог в котором спросим хочет ли он расшарить ссылку и если да отправим ее
+ * Итак в `OnClickListener shareClick` покажем пользователю простой диалог в котором спросим, хочет ли он расшарить ссылку, и если да, отправим ее
  
         **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
       ```java
@@ -743,12 +731,12 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
 
  ![Friends](http://imgur.com/VvOfgAN.png)
  
- Подробнее вы можете изучит в [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
+ Подробнее вы можете изучить в [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
 
 ##Итог
 Используя модули библиотеки ASNE вы легко и быстро интегрируете любую популярную социальную сеть в приложение. Конечно же в библиотеке содержится [больше методов](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) которые возможно пригодятся в вашем приложении. А в случае необходимости использовать методы SDK вы можете получить токен или объект SDK и написать свой метод
 
-Если данное приложение вам показалось простым вы можете посмотерть реализацию всех методов - [тут](https://github.com/gorbin/ASNE)
+Если данное приложение вам показалось простым, вы можете посмотерть реализацию всех методов - [тут](https://github.com/gorbin/ASNE)
 
 Код проекта: 
 [GitHub](https://github.com/gorbin/ASNETutorial)
@@ -756,7 +744,9 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     
 Статья по подключению Facebook, Twitter and LinkedIn на [codeproject.com](http://www.codeproject.com/Articles/815900/Android-social-network-integration)    
 
-В данный момент библиотека дорабатывается и я буду рад вашим советам или помощи в разработке.
+В данный момент библиотека дорабатывается, и я буду рад вашим советам или помощи в разработке.
+
 В ближайшее время напишу статью по подключению социальных сетей как модулей и подключу азиатскую социальную сеть. А так же все не доходят руки до javdoc и тестов
     
     
+
