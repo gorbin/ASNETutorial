@@ -316,7 +316,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     String OK_SECRET_KEY = getActivity().getString(R.string.ok_secret_key);
     ```
 	
-	* Получим `SocialNetworkManager`
+    * Получим `SocialNetworkManager`
     
     ```java
     mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MAinActivity.SOCIAL_NETWORK_TAG);
@@ -367,20 +367,20 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
         ```
     * Теперь необходимо обработать callback инициации `SocialNetworks`
     
-    ```java
-    @Override
-    public void onSocialNetworkManagerInitialized() {
-        for (SocialNetwork socialNetwork : mSocialNetworkManager.getInitializedSocialNetworks()) {
-            socialNetwork.setOnLoginCompleteListener(this);
-            initSocialNetwork(socialNetwork);
+        ```java
+        @Override
+        public void onSocialNetworkManagerInitialized() {
+            for (SocialNetwork socialNetwork : mSocialNetworkManager.getInitializedSocialNetworks()) {
+                socialNetwork.setOnLoginCompleteListener(this);
+                initSocialNetwork(socialNetwork);
+            }
         }
-    }
-    ```
-    не забудьте добавить `OnLoginCompleteListener`
+        ```
+        не забудьте добавить `OnLoginCompleteListener`
     
  Весь исходный код `onCreateView` и `onSocialNetworkManagerInitialized` из `MainFragment` инициацией социальных сетей и установкой listenerов
     
-    **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
+     **MainFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
     
     ```java
     public static SocialNetworkManager mSocialNetworkManager;
@@ -483,9 +483,11 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
         }
     }
     ```
-![MainFragment](http://imgur.com/i22fMz3.png)
-    
-8. Запросим логин в каждой социальной сети
+ ![MainFragment](http://imgur.com/i22fMz3.png)
+
+##Запросы к Социальным сетям
+
+1. Запросим логин в каждой социальной сети
     
     ```java
     SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
@@ -525,7 +527,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     
     ```
 
-9. После заполнения логина или обработки логина приложением социальной сети получим `onLoginSuccess(int networkId)` или `onError(int networkId, String requestID, String errorMessage, Object data)` - выведем соответствующее сообщение 
+2. После заполнения логина или обработки логина приложением социальной сети получим `onLoginSuccess(int networkId)` или `onError(int networkId, String requestID, String errorMessage, Object data)` - выведем соответствующее сообщение 
     
  **MainFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
 
@@ -543,7 +545,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     }   
     ```
 	
-10. Откроем `ProfileFragment.java` с помощью метода:
+3. Откроем `ProfileFragment.java` с помощью метода:
 
  **MainFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/MainFragment.java))
 
@@ -557,7 +559,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     } 
     ```
 	
-11. В `ProfileFragment.java` получим идетификатор социальной сети из `MainFragment.java`  
+4. В `ProfileFragment.java` получим идетификатор социальной сети из `MainFragment.java`  
 
  **ProfileFragment.java**([код](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
@@ -577,7 +579,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     }
     ```
     
-12. Теперь с помощью `networkId` мы выберем социальную сеть и запросим данные профиля текущего пользователя следующим образом:
+5. Теперь с помощью `networkId` мы выберем социальную сеть и запросим данные профиля текущего пользователя следующим образом:
 
     ```java
     socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
@@ -585,7 +587,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     socialNetwork.requestCurrentPerson();
     ```
  не забудьте добавить `OnRequestSocialPersonCompleteListener` 
-13. После обработки запроса мы можем использовать полученный объект `SocialPerson` для заполнения профиля пользователя в приложении, либо вывести ошибку при неудаче
+6. После обработки запроса мы можем использовать полученный объект `SocialPerson` для заполнения профиля пользователя в приложении, либо вывести ошибку при неудаче
 
  **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/ru/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
@@ -609,12 +611,12 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
     }
     ```
 ![MainFragment](http://imgur.com/b9c0VZr.png)    
-14. Для выхода из социальной сети необходимо использовать метод `logout()` 
+7. Для выхода из социальной сети необходимо использовать метод `logout()` 
  ```java
  socialNetwork.logout();
  getActivity().getSupportFragmentManager().popBackStack();
  ```
-15. И, честно говоря, это все - добавили ВК и Одноклассники в приложение. Аналогично вы можете добавить и другие социальные сети Facebook, Twitter, Linkedin, Instagram или Google Plus лишь добавив соответствующую зависимость и добавив их в `SocialNetworkManager` как в шаге 8:
+8. И, честно говоря, это все - добавили ВК и Одноклассники в приложение. Аналогично вы можете добавить и другие социальные сети Facebook, Twitter, Linkedin, Instagram или Google Plus лишь добавив соответствующую зависимость и добавив их в `SocialNetworkManager` как в шаге 8:
  ```java
     FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
     mSocialNetworkManager.addSocialNetwork(fbNetwork);
@@ -633,9 +635,9 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
  ```
  И конечно же вы можете использовать выше описанные методы для раобты с ними
  
-14. Но давайте разберем еще несколько запросов **Share link** и **Get user friendslist**
+9. Но давайте разберем еще несколько запросов **Share link** и **Get user friendslist**
  
- Давайте **share** ссылку с помощью социальной сети:
+ Давайте **поделимся ссылкой** с помощью социальной сети:
  * Настройим кнопку
  
      ```java
@@ -698,7 +700,7 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
       
   ![Share](http://imgur.com/DX5oj68.png)
 
-  Теперь выведем список друзей пользователя:   
+  Теперь выведем **список друзей** пользователя:   
   * Получим `SocialNetwork` из идентификатора социальной сети запросим список друзей
 
         ```java
