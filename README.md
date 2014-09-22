@@ -1,6 +1,6 @@
 ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
 ============
-
+![](https://raw.githubusercontent.com/gorbin/ASNE/master/resources/recomended.png)
 Simple example project for https://github.com/gorbin/ASNE library
 
 Today social network integration to your android application is common practice - it makes user easily login to your app and share their actions. There are a lot of ways to do it - usually developers add native social network SDK or use API for every network. It provides login via installed social network application or native dialogs. You have to spend time and nerves to learn and use different social network SDKs.
