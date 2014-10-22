@@ -81,15 +81,17 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="asne-core-0.2.1" level="project" />
     <orderEntry type="library" exported="" name="twitter4j-core-4.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="asne-twitter-0.2.1" level="project" />
     <orderEntry type="library" exported="" name="asne-linkedin-0.2.1" level="project" />
+    <orderEntry type="library" exported="" name="asne-googleplus-0.2.1" level="project" />
     <orderEntry type="library" exported="" name="facebook-3.17.2" level="project" />
-    <orderEntry type="library" exported="" name="asne-facebook-0.2.1" level="project" />
-    <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-4.3.23" level="project" />
+    <orderEntry type="library" exported="" name="asne-facebook-0.2.1" level="project" />
+    <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
   </component>
 </module>
 

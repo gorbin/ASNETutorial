@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.gorbin.asne.core.persons.SocialPerson;
+import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
+import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
+import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
+import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -73,17 +77,21 @@ public class FriendsListAdapter extends BaseAdapter {
     private void colorRow(int networkId){
         int color = context.getResources().getColor(R.color.dark);
         switch (networkId) {
-            case 1:
+            case TwitterSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.twitter);
                 image = R.drawable.twitter_user;
                 break;
-            case 2:
+            case LinkedInSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.linkedin);
                 image = R.drawable.linkedin_user;
                 break;
-            case 4:
+            case FacebookSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.facebook);
                 image = R.drawable.com_facebook_profile_picture_blank_square;
+                break;
+            case GooglePlusSocialNetwork.ID:
+                color = context.getResources().getColor(R.color.googleplus);
+                image = R.drawable.g_plus_user;
                 break;
         }
         holder.label.setTextColor(color);

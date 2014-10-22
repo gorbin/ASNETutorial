@@ -32,4 +32,13 @@
         android:background="#287bbc"
         android:layout_margin="8dp"
         android:textColor="#ffffffff"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Login via GooglePlus"
+        android:id="@+id/googleplus"
+        android:layout_gravity="center_horizontal"
+        android:background="#D34836"
+        android:layout_margin="8dp"
+        android:textColor="#ffffffff"/>
 </LinearLayout>

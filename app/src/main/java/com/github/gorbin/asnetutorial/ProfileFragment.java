@@ -20,6 +20,10 @@ import com.github.gorbin.asne.core.SocialNetwork;
 import com.github.gorbin.asne.core.listener.OnPostingCompleteListener;
 import com.github.gorbin.asne.core.listener.OnRequestSocialPersonCompleteListener;
 import com.github.gorbin.asne.core.persons.SocialPerson;
+import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
+import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
+import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
+import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
@@ -132,7 +136,11 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
                 public void onClick(DialogInterface dialog, int id) {
                     Bundle postParams = new Bundle();
                     postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                    socialNetwork.requestPostLink(postParams, message, postingComplete);
+                    if(networkId == GooglePlusSocialNetwork.ID) {
+                        socialNetwork.requestPostDialog(postParams, postingComplete);
+                    } else {
+                        socialNetwork.requestPostLink(postParams, message, postingComplete);
+                    }
                 }
             });
             ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -166,15 +174,19 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
-            case 1:
+            case TwitterSocialNetwork.ID:
                 color = getResources().getColor(R.color.twitter);
                 image = R.drawable.twitter_user;
                 break;
-            case 2:
+            case LinkedInSocialNetwork.ID:
                 color = getResources().getColor(R.color.linkedin);
                 image = R.drawable.linkedin_user;
                 break;
-            case 4:
+            case GooglePlusSocialNetwork.ID:
+                color = getResources().getColor(R.color.googleplus);
+                image = R.drawable.g_plus_user;
+                break;
+            case FacebookSocialNetwork.ID:
                 color = getResources().getColor(R.color.facebook);
                 image = R.drawable.com_facebook_profile_picture_blank_square;
                 break;

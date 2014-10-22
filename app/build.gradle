@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         applicationId "com.github.gorbin.asnetutorial"
@@ -25,4 +25,5 @@ dependencies {
     compile 'com.github.asne:asne-facebook:0.2.1'
     compile 'com.github.asne:asne-linkedin:0.2.1'
     compile 'com.github.asne:asne-twitter:0.2.1'
+    compile 'com.github.asne:asne-googleplus:0.2.1'
 }

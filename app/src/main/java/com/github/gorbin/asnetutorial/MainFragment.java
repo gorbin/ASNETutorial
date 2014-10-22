@@ -12,6 +12,7 @@ import com.github.gorbin.asne.core.SocialNetwork;
 import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.github.gorbin.asne.core.listener.OnLoginCompleteListener;
 import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
+import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 
@@ -31,9 +32,6 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
      * 6 - Odnoklassniki
      * 7 - Instagram
      */
-    public static final int TWITTER = 1;
-    public static final int LINKEDIN = 2;
-    public static final int FACEBOOK = 4;
     private Button facebook;
     private Button twitter;
     private Button linkedin;
@@ -52,6 +50,8 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         twitter = (Button) rootView.findViewById(R.id.twitter);
         twitter.setOnClickListener(loginClick);
         linkedin = (Button) rootView.findViewById(R.id.linkedin);
+        linkedin.setOnClickListener(loginClick);
+        linkedin = (Button) rootView.findViewById(R.id.googleplus);
         linkedin.setOnClickListener(loginClick);
 
         //Get Keys for initiate SocialNetworks
@@ -84,6 +84,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
             mSocialNetworkManager.addSocialNetwork(liNetwork);
 
+            //Init and add to manager LinkedInSocialNetwork
+            GooglePlusSocialNetwork gpNetwork = new GooglePlusSocialNetwork(this);
+            mSocialNetworkManager.addSocialNetwork(gpNetwork);
+
             //Initiate every network from mSocialNetworkManager
             getFragmentManager().beginTransaction().add(mSocialNetworkManager, MainActivity.SOCIAL_NETWORK_TAG).commit();
             mSocialNetworkManager.setOnInitializationCompleteListener(this);
@@ -103,14 +107,17 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     private void initSocialNetwork(SocialNetwork socialNetwork){
         if(socialNetwork.isConnected()){
             switch (socialNetwork.getID()){
-                case FACEBOOK:
+                case FacebookSocialNetwork.ID:
                     facebook.setText("Show Facebook profile");
                     break;
-                case TWITTER:
+                case TwitterSocialNetwork.ID:
                     twitter.setText("Show Twitter profile");
                     break;
-                case LINKEDIN:
+                case LinkedInSocialNetwork.ID:
                     linkedin.setText("Show LinkedIn profile");
+                    break;
+                case GooglePlusSocialNetwork.ID:
+                    linkedin.setText("Show GooglePlus profile");
                     break;
             }
         }
@@ -132,13 +139,16 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             int networkId = 0;
             switch (view.getId()){
                 case R.id.facebook:
-                    networkId = FACEBOOK;
+                    networkId = FacebookSocialNetwork.ID;
                     break;
                 case R.id.twitter:
-                    networkId = TWITTER;
+                    networkId = TwitterSocialNetwork.ID;
                     break;
                 case R.id.linkedin:
-                    networkId = LINKEDIN;
+                    networkId = LinkedInSocialNetwork.ID;
+                    break;
+                case R.id.googleplus:
+                    networkId = GooglePlusSocialNetwork.ID;
                     break;
             }
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
