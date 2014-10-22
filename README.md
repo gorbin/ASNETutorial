@@ -1,13 +1,13 @@
-ASNETutorial
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
 ============
-
+![](https://raw.githubusercontent.com/gorbin/ASNE/master/resources/recomended.png)
 Simple example project for https://github.com/gorbin/ASNE library
 
-Today social network integration to your android application is common practice - it makes user easily login to your app and share their actions. There are a lot of way to do it - usually developers add native social network SDK or use API for every network. It provides login via installed social network application or native dialogs. You have to spend time and nerves to learn and use different social network SDKs.
+Today social network integration to your android application is common practice - it makes user easily login to your app and share their actions. There are a lot of ways to do it - usually developers add native social network SDK or use API for every network. It provides login via installed social network application or native dialogs. You have to spend time and nerves to learn and use different social network SDKs.
 
-What if you need to add one more social network for your application? Sometimes you have to reorganize or redo all your integrations. This leads to idea to create and implement common interface for all social networks. Fortunately there is an open source modular library [ASNE](https://github.com/gorbin/ASNE) that allows you to choose necessary social network and provides full sdk and common interface for most oftenly used requests(login, share, friendslist & etc) It saves your time and simplifies adding another networks in the future. Moreover you can easily add any other social network as new module - the similar way as it done in other modules. 
+What if you need to add one more social network for your application? Sometimes you have to reorganize or redo all your integrations. This leads to idea to create and implement common interface for all social networks. Fortunately there is an open source modular library [ASNE](https://github.com/gorbin/ASNE) that allows you to choose necessary social network and provides full sdk and common interface for most oftenly used requests(login, share, friendslist & etc) It saves your time and simplifies adding another networks in the future. Moreover you can easily add any other social network as new module - the similar way as it's done in other modules. 
 
-In this tutorial you can learn how easily integrate Facebook, Twitter in android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with login, share link and showing friends list.
+In this tutorial you can learn how easily integrate Facebook, Twitter in android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with login, sharing link and showing friends list.
  
 
 ##Registering app - getting keys for your application
@@ -81,9 +81,9 @@ To continue you need
     
     </manifest>
     ```
-4. Set dependecies for [asne-modules](https://github.com/gorbin/ASNE):
+4. Set dependencies for [asne-modules](https://github.com/gorbin/ASNE):
     
-    Open _Project Structure_ => choose your module and open _Dependecies_ => _Add new library dependency_
+    Open _Project Structure_ => choose your module and open _Dependencies_ => _Add new library dependency_
 
  ![add library dependecy](http://i.imgur.com/4k62Ux1.png)
     
@@ -91,7 +91,7 @@ To continue you need
     
  ![search asne](http://i.imgur.com/gYou0Uf.png)
     
- or just add them manualy to `build.gradle`
+ or just add them manually to `build.gradle`
     
  **build.gradle**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/build.gradle))
     
@@ -283,7 +283,7 @@ To continue you need
     </ScrollView>
     ```
 
- and save socialnetworks colors to
+ and save social networks colors to
 
  **color.xml**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/res/values/colors.xml))
     ```xml
@@ -297,7 +297,7 @@ To continue you need
     </resources>
     ```
     
-6. Let's setup `MainActivity.java` We should setup `onActivityResult` method to catch responses after requesting login
+6. Let's setup `MainActivity.java` We should set up `onActivityResult` method to catch responses after requesting login
 
     **MainActivity.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/MainActivity.java))
     
@@ -380,7 +380,7 @@ To continue you need
     ```
     don't forget to implement `SocialNetworkManager.OnInitializationCompleteListener`
      
-    * If `SocialNetworkManager` - come from another fragment where we alredy init it - get all initialized social networks and add to them neccessary listeners 
+    * If `SocialNetworkManager` - come from another fragment where we already init it - get all initialized social networks and add to them necessary listeners 
     
     ```java
     if(!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
@@ -587,7 +587,7 @@ To continue you need
     
     ```
     
-11. In `ProfileFragment.java` setup get networkId from `MainFragment.java`  
+11. In `ProfileFragment.java` get networkId from `MainFragment.java`  
 
  **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
@@ -615,7 +615,7 @@ To continue you need
     socialNetwork.requestCurrentPerson();
     ```
  don't forget to implement `OnRequestSocialPersonCompleteListener` 
-13. After compleating request we can use SocialPerson dadta to fill our profile view
+13. After completing request we can use SocialPerson dadta to fill our profile view
 
  **ProfileFragment.java**(full [source](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/ProfileFragment.java))
     ```java
@@ -644,7 +644,7 @@ To continue you need
 socialNetwork.logout();
 getActivity().getSupportFragmentManager().popBackStack();
 ```
-15. Trully, that's all - we integrate Facebook, Twitter and Linkedin and get user profile. You can add other social networks like Instagram or Google Plus just adding dependency for them and adding them to `SocialNetworkManager` like in step 8:
+15. Truly, that's all - we integrate Facebook, Twitter and Linkedin and get user profile. You can add other social networks like Instagram or Google Plus just adding dependency for them and adding them to `SocialNetworkManager` like in step 8:
  ```java
     GooglePlusSocialNetwork gpNetwork = new GooglePlusSocialNetwork(this);
     mSocialNetworkManager.addSocialNetwork(gpNetwork);
@@ -664,7 +664,7 @@ getActivity().getSupportFragmentManager().popBackStack();
      share.setOnClickListener(shareClick);
      ```
 
- * To share we neet fill bundle and  just request post link
+ * To share we need fill bundle and  just request post link
 
       ```java
       Bundle postParams = new Bundle();
@@ -731,7 +731,7 @@ getActivity().getSupportFragmentManager().popBackStack();
       
   ![Share](http://imgur.com/DX5oj68.png)
 
-  Here we make standart alert dialog to notify user that we want to share link and in PositiveButton we check if it is not Twitter(there are no method in twitter api to post link, but we can post message as message + link)
+  Here we make standard alert dialog to notify user that we want to share link and in PositiveButton we check if it is not Twitter(there are no method in twitter api to post link, but we can post message as message + link)
 
   Let's get **friendslist** via social network:   
   * Get social network id
@@ -770,14 +770,11 @@ getActivity().getSupportFragmentManager().popBackStack();
  More detailed you can read in [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
 
 ##Conclusion
-Using ASNE modules you can easily and quicly integrate any popular social networks and use common requests in your app. Ofcourse library got [more methods](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) which you can use in your application. But in case if you want to use social network methods from SDK or API you can easily get accesstokens or get instancesof main object in your App
+Using ASNE modules you can easily and quickly integrate any popular social networks and use common requests in your app. Of course library got [more methods](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) which you can use in your application. But in case if you want to use social network methods from SDK or API you can easily get accesstokens or get instancesof main object in your App
 
 This is simple tutorial demom if you need more complex - [check ASNE demo app](https://github.com/gorbin/ASNE)
 
 Source code: 
-
-[GitHub](https://github.com/gorbin/ASNETutorial) 
-
 [Zip](https://github.com/gorbin/ASNETutorial/archive/master.zip)
     
     
