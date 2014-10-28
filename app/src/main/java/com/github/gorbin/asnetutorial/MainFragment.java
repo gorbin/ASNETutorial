@@ -35,6 +35,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     private Button facebook;
     private Button twitter;
     private Button linkedin;
+    private Button googleplus;
 
     public MainFragment() {
     }
@@ -51,19 +52,21 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         twitter.setOnClickListener(loginClick);
         linkedin = (Button) rootView.findViewById(R.id.linkedin);
         linkedin.setOnClickListener(loginClick);
-        linkedin = (Button) rootView.findViewById(R.id.googleplus);
-        linkedin.setOnClickListener(loginClick);
+        googleplus = (Button) rootView.findViewById(R.id.googleplus);
+        googleplus.setOnClickListener(loginClick);
 
         //Get Keys for initiate SocialNetworks
         String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
         String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
+        String TWITTER_CALLBACK_URL = "oauth://ASNE";
         String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
         String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
+        String LINKEDIN_CALLBACK_URL = "https://asneTutorial";
 
         //Chose permissions
         ArrayList<String> fbScope = new ArrayList<String>();
         fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
-        String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
+        String linkedInScope = "r_basicprofile+r_fullprofile+rw_nus+r_network+w_messages+r_emailaddress+r_contactinfo";
 
         //Use manager to manage SocialNetworks
         mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(MainActivity.SOCIAL_NETWORK_TAG);
@@ -77,11 +80,11 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             mSocialNetworkManager.addSocialNetwork(fbNetwork);
 
             //Init and add to manager TwitterSocialNetwork
-            TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
+            TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CALLBACK_URL);
             mSocialNetworkManager.addSocialNetwork(twNetwork);
 
             //Init and add to manager LinkedInSocialNetwork
-            LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
+            LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, LINKEDIN_CALLBACK_URL, linkedInScope);
             mSocialNetworkManager.addSocialNetwork(liNetwork);
 
             //Init and add to manager LinkedInSocialNetwork
@@ -117,7 +120,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
                     linkedin.setText("Show LinkedIn profile");
                     break;
                 case GooglePlusSocialNetwork.ID:
-                    linkedin.setText("Show GooglePlus profile");
+                    googleplus.setText("Show GooglePlus profile");
                     break;
             }
         }
