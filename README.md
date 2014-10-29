@@ -120,9 +120,9 @@ To continue you need
     dependencies {
         compile fileTree(include: ['*.jar'], dir: 'libs')
         compile 'com.android.support:appcompat-v7:20.0.0'
-        compile 'com.github.asne:asne-facebook:0.2.1'
-        compile 'com.github.asne:asne-linkedin:0.2.1'
-        compile 'com.github.asne:asne-twitter:0.2.1'
+        compile 'com.github.asne:asne-facebook:0.3.1'
+        compile 'com.github.asne:asne-linkedin:0.3.1'
+        compile 'com.github.asne:asne-twitter:0.3.1'
     }
  ```
 5. Lets create some layouts
