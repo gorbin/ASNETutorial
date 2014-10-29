@@ -1,5 +1,4 @@
-ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
-[![Habrahabr](https://img.shields.io/badge/Habrahabr-article-99CCCC.svg?style=flat)](http://habrahabr.ru/post/237095/)
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921) [![Habrahabr](https://img.shields.io/badge/Habrahabr-article-99CCCC.svg?style=flat)](http://habrahabr.ru/post/237095/)
 ============
 
 Пример применения библиотеки [ASNE](https://github.com/gorbin/ASNE)
