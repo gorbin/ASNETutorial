@@ -1,4 +1,4 @@
-ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)[![Habrahabr](https://img.shields.io/badge/Habrahabr-article-99CCCC.svg?style=flat)](http://habrahabr.ru/post/237095/)
 ============
 
 Пример применения библиотеки [ASNE](https://github.com/gorbin/ASNE)
@@ -118,8 +118,8 @@ ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsen
  dependencies {
      compile fileTree(include: ['*.jar'], dir: 'libs')
      compile 'com.android.support:appcompat-v7:20.0.0'
-     compile 'com.github.asne:asne-vk:0.2.1'
-     compile 'com.github.asne:asne-odnoklassniki:0.2.1'
+     compile 'com.github.asne:asne-vk:0.3.1'
+     compile 'com.github.asne:asne-odnoklassniki:0.3.1'
  }
  ```
 5. Теперь немного украсим наше приложение
