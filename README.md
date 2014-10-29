@@ -347,8 +347,10 @@ To continue you need
     ```java
     String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
     String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
+    String TWITTER_CALLBACK_URL = "oauth://ASNE";
     String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
     String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
+    String LINKEDIN_CALLBACK_URL = "https://asneTutorial";
     ```
     * Create chosen `SocialNetworks` with permissions
     
@@ -358,10 +360,10 @@ To continue you need
     FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
 
     // permissions for twitter in developer twitter console
-    TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
+    TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CALLBACK_URL);
 
-    String linkedInScope = "r_basicprofile+rw_nus+r_network+w_messages";
-    LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, linkedInScope);
+    String linkedInScope = "r_basicprofile+r_fullprofile+rw_nus+r_network+w_messages+r_emailaddress+r_contactinfo";
+    LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, LINKEDIN_CALLBACK_URL, linkedInScope);
         
     ```
     
