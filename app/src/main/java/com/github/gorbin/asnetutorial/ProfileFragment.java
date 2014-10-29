@@ -135,6 +135,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
             ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Bundle postParams = new Bundle();
+                    postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy way to add social networks for android application");
                     postParams.putString(SocialNetwork.BUNDLE_LINK, link);
                     if(networkId == GooglePlusSocialNetwork.ID) {
                         socialNetwork.requestPostDialog(postParams, postingComplete);
