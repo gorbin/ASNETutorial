@@ -1,4 +1,4 @@
-ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921) [![Codeproject](https://img.shields.io/badge/Codeproject-article-orange.svg?style=flat)](http://www.codeproject.com/Articles/815900/Android-social-network-integration)
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921) [![Codeproject](https://img.shields.io/badge/Codeproject-article-ff9900.svg?style=flat)](http://www.codeproject.com/Articles/815900/Android-social-network-integration)
 ============
 ![](https://raw.githubusercontent.com/gorbin/ASNE/master/resources/recomended.png)
 Simple example project for https://github.com/gorbin/ASNE library
