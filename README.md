@@ -1,4 +1,4 @@
-ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921)
+ASNETutorial    [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ASNETutorial-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/921) [![Codeproject](https://img.shields.io/badge/Codeproject-article-orange.svg?style=flat)](http://www.codeproject.com/Articles/815900/Android-social-network-integration)
 ============
 ![](https://raw.githubusercontent.com/gorbin/ASNE/master/resources/recomended.png)
 Simple example project for https://github.com/gorbin/ASNE library
@@ -775,6 +775,8 @@ getActivity().getSupportFragmentManager().popBackStack();
 Using ASNE modules you can easily and quickly integrate any popular social networks and use common requests in your app. Of course library got [more methods](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) which you can use in your application. But in case if you want to use social network methods from SDK or API you can easily get accesstokens or get instancesof main object in your App
 
 This is simple tutorial demom if you need more complex - [check ASNE demo app](https://github.com/gorbin/ASNE)
+
+[Codeproject article](http://www.codeproject.com/Articles/815900/Android-social-network-integration)
 
 Source code: 
 [Zip](https://github.com/gorbin/ASNETutorial/archive/master.zip)
