@@ -50,7 +50,9 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
 
     @Override
     public void onGetFriendsIdComplete(int id, String[] friendsID) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
+        int friendsCount = friendsID.length;
+        String title = getResources().getQuantityString(R.plurals.friends, friendsCount, friendsCount);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 
     @Override

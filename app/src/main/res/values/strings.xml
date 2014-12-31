@@ -9,6 +9,10 @@
     <string name="sent">Sent</string>
     <string name="loading_person">Loading social person</string>
     <string name="loading_friends">Loading friends</string>
+    <plurals name="friends">
+        <item quantity="one">%d Friend</item>
+        <item quantity="other">%d Friends</item>
+    </plurals>
 
     <string name="facebook_app_id">312054032307399</string>
     <string name="facebook_login">Login via Facebook</string>
