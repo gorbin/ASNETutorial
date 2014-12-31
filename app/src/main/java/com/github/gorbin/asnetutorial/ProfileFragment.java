@@ -28,7 +28,7 @@ import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
-    private String message = "Need simple social networks integration? Check this lbrary:";
+    private String message = "Need simple social networks integration? Check this library:";
     private String link = "https://github.com/gorbin/ASNE";
 
     private static final String NETWORK_ID = "NETWORK_ID";
