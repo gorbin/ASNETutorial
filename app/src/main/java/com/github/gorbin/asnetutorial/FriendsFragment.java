@@ -12,14 +12,14 @@ import com.github.gorbin.asne.core.SocialNetwork;
 import com.github.gorbin.asne.core.listener.OnRequestGetFriendsCompleteListener;
 import com.github.gorbin.asne.core.persons.SocialPerson;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FriendsFragment extends Fragment implements OnRequestGetFriendsCompleteListener {
 
     private static final String NETWORK_ID = "NETWORK_ID";
     private ListView listView;
 
-    public static FriendsFragment newInstannce(int id) {
+    public static FriendsFragment newInstance(int id) {
         FriendsFragment fragment = new FriendsFragment();
         Bundle args = new Bundle();
         args.putInt(NETWORK_ID, id);
@@ -37,23 +37,26 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
         int networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
 
         View rootView = inflater.inflate(R.layout.friends_list_fragment, container, false);
-        listView = (ListView) rootView.findViewById(R.id.list);
+        listView = (ListView) rootView.findViewById(android.R.id.list);
+
+        MainActivity.showProgress(getText(R.string.loading_friends));
 
         SocialNetwork socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestGetFriendsCompleteListener(this);
         socialNetwork.requestGetFriends();
-        MainActivity.showProgress("Loading friends");
 
         return rootView;
     }
 
     @Override
-    public void OnGetFriendsIdComplete(int id, String[] friendsID) {
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
+    public void onGetFriendsIdComplete(int id, String[] friendsID) {
+        int friendsCount = friendsID.length;
+        String title = getResources().getQuantityString(R.plurals.friends, friendsCount, friendsCount);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 
     @Override
-    public void OnGetFriendsComplete(int networkID, ArrayList<SocialPerson> socialPersons) {
+    public void onGetFriendsComplete(int networkID, List<SocialPerson> socialPersons) {
         MainActivity.hideProgress();
         FriendsListAdapter adapter = new FriendsListAdapter(getActivity(), socialPersons, networkID);
         listView.setAdapter(adapter);

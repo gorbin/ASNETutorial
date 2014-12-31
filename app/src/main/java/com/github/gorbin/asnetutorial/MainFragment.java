@@ -16,7 +16,6 @@ import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,28 +43,27 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_fragment, container, false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         // init buttons and set Listener
         facebook = (Button) rootView.findViewById(R.id.facebook);
-        facebook.setOnClickListener(loginClick);
+        facebook.setOnClickListener(mLoginClick);
         twitter = (Button) rootView.findViewById(R.id.twitter);
-        twitter.setOnClickListener(loginClick);
+        twitter.setOnClickListener(mLoginClick);
         linkedin = (Button) rootView.findViewById(R.id.linkedin);
-        linkedin.setOnClickListener(loginClick);
+        linkedin.setOnClickListener(mLoginClick);
         googleplus = (Button) rootView.findViewById(R.id.googleplus);
-        googleplus.setOnClickListener(loginClick);
+        googleplus.setOnClickListener(mLoginClick);
 
         //Get Keys for initiate SocialNetworks
-        String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
-        String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
+        String TWITTER_CONSUMER_KEY = getString(R.string.twitter_consumer_key);
+        String TWITTER_CONSUMER_SECRET = getString(R.string.twitter_consumer_secret);
         String TWITTER_CALLBACK_URL = "oauth://ASNE";
-        String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
-        String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
+        String LINKEDIN_CONSUMER_KEY = getString(R.string.linkedin_consumer_key);
+        String LINKEDIN_CONSUMER_SECRET = getString(R.string.linkedin_consumer_secret);
         String LINKEDIN_CALLBACK_URL = "https://asneTutorial";
 
         //Chose permissions
-        ArrayList<String> fbScope = new ArrayList<String>();
-        fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
+        List<String> fbScope = Arrays.asList("public_profile, email, user_friends");
         String linkedInScope = "r_basicprofile+r_fullprofile+rw_nus+r_network+w_messages+r_emailaddress+r_contactinfo";
 
         //Use manager to manage SocialNetworks
@@ -96,7 +94,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             mSocialNetworkManager.setOnInitializationCompleteListener(this);
         } else {
             //if manager exist - get and setup login only for initialized SocialNetworks
-            if(!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
+            if (!mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
                 List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
                 for (SocialNetwork socialNetwork : socialNetworks) {
                     socialNetwork.setOnLoginCompleteListener(this);
@@ -107,24 +105,25 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         return rootView;
     }
 
-    private void initSocialNetwork(SocialNetwork socialNetwork){
-        if(socialNetwork.isConnected()){
-            switch (socialNetwork.getID()){
+    private void initSocialNetwork(SocialNetwork socialNetwork) {
+        if (socialNetwork.isConnected()) {
+            switch (socialNetwork.getID()) {
                 case FacebookSocialNetwork.ID:
-                    facebook.setText("Show Facebook profile");
+                    facebook.setText(R.string.facebook_show);
                     break;
                 case TwitterSocialNetwork.ID:
-                    twitter.setText("Show Twitter profile");
+                    twitter.setText(R.string.twitter_show);
                     break;
                 case LinkedInSocialNetwork.ID:
-                    linkedin.setText("Show LinkedIn profile");
+                    linkedin.setText(R.string.linkedin_show);
                     break;
                 case GooglePlusSocialNetwork.ID:
-                    googleplus.setText("Show GooglePlus profile");
+                    googleplus.setText(R.string.gplus_show);
                     break;
             }
         }
     }
+
     @Override
     public void onSocialNetworkManagerInitialized() {
         //when init SocialNetworks - get and setup login only for initialized SocialNetworks
@@ -136,11 +135,11 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
 
     //Login listener
 
-    private View.OnClickListener loginClick = new View.OnClickListener() {
+    private View.OnClickListener mLoginClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             int networkId = 0;
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.facebook:
                     networkId = FacebookSocialNetwork.ID;
                     break;
@@ -155,10 +154,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
                     break;
             }
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
-            if(!socialNetwork.isConnected()) {
-                if(networkId != 0) {
-                    socialNetwork.requestLogin();
-                    MainActivity.showProgress("Loading social person");
+            if (!socialNetwork.isConnected()) {
+                if (networkId != 0) {
+                    MainActivity.showProgress(getText(R.string.loading_person));
+                    socialNetwork.requestLogin(MainFragment.this);
                 } else {
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();
                 }
@@ -180,8 +179,8 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         Toast.makeText(getActivity(), "ERROR: " + errorMessage, Toast.LENGTH_LONG).show();
     }
 
-    private void startProfile(int networkId){
-        ProfileFragment profile = ProfileFragment.newInstannce(networkId);
+    private void startProfile(int networkId) {
+        ProfileFragment profile = ProfileFragment.newInstance(networkId);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .addToBackStack("profile")
                 .replace(R.id.container, profile)

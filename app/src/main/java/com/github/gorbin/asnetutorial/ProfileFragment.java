@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +28,6 @@ import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
-    private String message = "Need simple social networks integration? Check this lbrary:";
-    private String link = "https://github.com/gorbin/ASNE";
-
     private static final String NETWORK_ID = "NETWORK_ID";
     private SocialNetwork socialNetwork;
     private int networkId;
@@ -41,7 +39,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private Button share;
     private RelativeLayout frame;
 
-    public static ProfileFragment newInstannce(int id) {
+    public static ProfileFragment newInstance(int id) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putInt(NETWORK_ID, id);
@@ -57,7 +55,9 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Profile");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Profile");
+
+        MainActivity.showProgress(getText(R.string.loading_person));
 
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
@@ -74,9 +74,8 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
 
         socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
-        socialNetwork.requestCurrentPerson();
+        socialNetwork.requestCurrentPerson(this);
 
-        MainActivity.showProgress("Loading social person");
         return rootView;
     }
 
@@ -104,11 +103,13 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         name.setText(socialPerson.name);
         id.setText(socialPerson.id);
         String socialPersonString = socialPerson.toString();
-        String infoString = socialPersonString.substring(socialPersonString.indexOf("{")+1, socialPersonString.lastIndexOf("}"));
+        String infoString = socialPersonString.substring(socialPersonString.indexOf("{") + 1, socialPersonString.lastIndexOf("}"));
         info.setText(infoString.replace(", ", "\n"));
+        if (!TextUtils.isEmpty(socialPerson.avatarURL)) {
         Picasso.with(getActivity())
                 .load(socialPerson.avatarURL)
                 .into(photo);
+    }
     }
 
     @Override
@@ -120,7 +121,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private View.OnClickListener friendsClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            FriendsFragment friends = FriendsFragment.newInstannce(networkId);
+            FriendsFragment friends = FriendsFragment.newInstance(networkId);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .addToBackStack("friends")
                     .replace(R.id.container, friends)
@@ -131,20 +132,21 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private View.OnClickListener shareClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
-            ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
+            final String link = getString(R.string.share_link);
+            AlertDialog.Builder ad = alertDialogInit(getString(R.string.share_title), link);
+            ad.setPositiveButton(R.string.share_ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Bundle postParams = new Bundle();
                     postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy way to add social networks for android application");
                     postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                    if(networkId == GooglePlusSocialNetwork.ID) {
+                    if (networkId == GooglePlusSocialNetwork.ID) {
                         socialNetwork.requestPostDialog(postParams, postingComplete);
                     } else {
-                        socialNetwork.requestPostLink(postParams, message, postingComplete);
+                        socialNetwork.requestPostLink(postParams, getString(R.string.share_message), postingComplete);
                     }
                 }
             });
-            ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            ad.setNegativeButton(R.string.share_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     dialog.cancel();
@@ -162,7 +164,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
         @Override
         public void onPostSuccessfully(int socialNetworkID) {
-            Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getText(R.string.sent), Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -171,7 +173,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         }
     };
 
-    private void colorProfile(int networkId){
+    private void colorProfile(int networkId) {
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
@@ -200,7 +202,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         photo.setImageResource(image);
     }
 
-    private AlertDialog.Builder alertDialogInit(String title, String message){
+    private AlertDialog.Builder alertDialogInit(String title, String message) {
         AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
         ad.setTitle(title);
         ad.setMessage(message);

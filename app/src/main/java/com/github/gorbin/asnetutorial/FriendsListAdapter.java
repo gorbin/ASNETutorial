@@ -15,16 +15,16 @@ import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FriendsListAdapter extends BaseAdapter {
     private final Activity context;
     private ViewHolder holder;
-    private ArrayList<SocialPerson> friends;
+    private List<SocialPerson> friends;
     private int networkId;
     private int image;
 
-    public FriendsListAdapter(Activity context, ArrayList<SocialPerson> friends, int socialNetworkID) {
+    public FriendsListAdapter(Activity context, List<SocialPerson> friends, int socialNetworkID) {
         this.context = context;
         this.friends = friends;
         this.networkId = socialNetworkID;

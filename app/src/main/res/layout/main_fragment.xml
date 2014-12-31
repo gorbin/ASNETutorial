@@ -8,37 +8,37 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Facebook"
+        android:text="@string/facebook_login"
         android:id="@+id/facebook"
         android:layout_gravity="center_horizontal"
-        android:background="#3b5998"
+        android:background="@color/facebook"
         android:layout_margin="8dp"
         android:textColor="#ffffffff" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Twitter"
+        android:text="@string/twitter_login"
         android:id="@+id/twitter"
         android:layout_gravity="center_horizontal"
-        android:background="#55ACEE"
+        android:background="@color/twitter"
         android:layout_margin="8dp"
         android:textColor="#ffffffff"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via LinkedIn"
+        android:text="@string/linkedin_login"
         android:id="@+id/linkedin"
         android:layout_gravity="center_horizontal"
-        android:background="#287bbc"
+        android:background="@color/linkedin"
         android:layout_margin="8dp"
         android:textColor="#ffffffff"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via GooglePlus"
+        android:text="@string/gplus_login"
         android:id="@+id/googleplus"
         android:layout_gravity="center_horizontal"
-        android:background="#D34836"
+        android:background="@color/googleplus"
         android:layout_margin="8dp"
         android:textColor="#ffffffff"/>
 </LinearLayout>
