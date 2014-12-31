@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:padding="4dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="4dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/label"
+        android:maxLines="3"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        android:ellipsize="end"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:id="@+id/id"
+        android:layout_below="@+id/label"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/image">
-
-    </TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="18sp"
-        android:id="@+id/label"
-        android:maxLines="3"
-        android:layout_marginLeft="6dp"
-        android:layout_below="@+id/id"
-        android:layout_toRightOf="@+id/image"
-        android:ellipsize="end">
-
-    </TextView>
+        android:layout_toRightOf="@+id/image"/>
 
     <ImageView
         android:layout_width="50dp"
@@ -42,6 +38,6 @@
         android:adjustViewBounds="true"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/user" />
+        android:src="@drawable/user"/>
 
 </RelativeLayout>
