@@ -37,7 +37,7 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
         int networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
 
         View rootView = inflater.inflate(R.layout.friends_list_fragment, container, false);
-        listView = (ListView) rootView.findViewById(R.id.list);
+        listView = (ListView) rootView.findViewById(android.R.id.list);
 
         MainActivity.showProgress("Loading friends");
 
