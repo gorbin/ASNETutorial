@@ -8,7 +8,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Facebook"
+        android:text="@string/facebook_login"
         android:id="@+id/facebook"
         android:layout_gravity="center_horizontal"
         android:background="@color/facebook"
@@ -17,7 +17,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via Twitter"
+        android:text="@string/twitter_login"
         android:id="@+id/twitter"
         android:layout_gravity="center_horizontal"
         android:background="@color/twitter"
@@ -26,7 +26,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via LinkedIn"
+        android:text="@string/linkedin_login"
         android:id="@+id/linkedin"
         android:layout_gravity="center_horizontal"
         android:background="@color/linkedin"
@@ -35,7 +35,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login via GooglePlus"
+        android:text="@string/gplus_login"
         android:id="@+id/googleplus"
         android:layout_gravity="center_horizontal"
         android:background="@color/googleplus"

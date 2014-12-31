@@ -3,8 +3,23 @@
     <string name="app_name">ASNE-tutorial</string>
 
     <string name="facebook_app_id">312054032307399</string>
+    <string name="facebook_login">Login via Facebook</string>
+    <string name="facebook_show">Show Facebook profile</string>
+
     <string name="twitter_consumer_key">8Gy3OKQMbKJ15BH0BferBNHEj</string>
     <string name="twitter_consumer_secret">dSUHvkbS8xCwoS6lozPAFgDtIuKhTGkRW1OYXJqxBCMgKMyDX4</string>
+    <string name="twitter_login">Login via Twitter</string>
+    <string name="twitter_show">Show Twitter profile</string>
+
     <string name="linkedin_consumer_key">7523ssry5qk7rl</string>
     <string name="linkedin_consumer_secret">sFyJf0ZW1lp31aGU</string>
+    <string name="linkedin_login">Login via LinkedIn</string>
+    <string name="linkedin_show">Show LinkedIn profile</string>
+
+    <string name="gplus_login">Login via GooglePlus</string>
+    <string name="gplus_show">Show GooglePlus profile</string>
+
+    <string name="reddit_consumer_key">N2Lpad7lBpi4kA</string>
+    <string name="reddit_login">Login via Reddit</string>
+    <string name="reddit_show">Show Reddit profile</string>
 </resources>

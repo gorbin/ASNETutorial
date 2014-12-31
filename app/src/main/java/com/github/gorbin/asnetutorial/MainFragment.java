@@ -109,16 +109,16 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         if (socialNetwork.isConnected()) {
             switch (socialNetwork.getID()) {
                 case FacebookSocialNetwork.ID:
-                    facebook.setText("Show Facebook profile");
+                    facebook.setText(R.string.facebook_show);
                     break;
                 case TwitterSocialNetwork.ID:
-                    twitter.setText("Show Twitter profile");
+                    twitter.setText(R.string.twitter_show);
                     break;
                 case LinkedInSocialNetwork.ID:
-                    linkedin.setText("Show LinkedIn profile");
+                    linkedin.setText(R.string.linkedin_show);
                     break;
                 case GooglePlusSocialNetwork.ID:
-                    googleplus.setText("Show GooglePlus profile");
+                    googleplus.setText(R.string.gplus_show);
                     break;
             }
         }
