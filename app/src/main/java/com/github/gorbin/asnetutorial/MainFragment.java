@@ -156,7 +156,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             SocialNetwork socialNetwork = mSocialNetworkManager.getSocialNetwork(networkId);
             if (!socialNetwork.isConnected()) {
                 if (networkId != 0) {
-                    MainActivity.showProgress("Loading social person");
+                    MainActivity.showProgress(getText(R.string.loading_person));
                     socialNetwork.requestLogin(MainFragment.this);
                 } else {
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();

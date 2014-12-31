@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
         return super.onOptionsItemSelected(item);
     }
 
-    protected static void showProgress(String message) {
+    protected static void showProgress(CharSequence message) {
         pd = new ProgressDialog(context);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pd.setMessage(message);

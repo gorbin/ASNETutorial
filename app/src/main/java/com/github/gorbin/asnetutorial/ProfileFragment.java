@@ -28,9 +28,6 @@ import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
-    private String message = "Need simple social networks integration? Check this library:";
-    private String link = "https://github.com/gorbin/ASNE";
-
     private static final String NETWORK_ID = "NETWORK_ID";
     private SocialNetwork socialNetwork;
     private int networkId;
@@ -60,7 +57,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Profile");
 
-        MainActivity.showProgress("Loading social person");
+        MainActivity.showProgress(getText(R.string.loading_person));
 
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
@@ -135,8 +132,9 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private View.OnClickListener shareClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
-            ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
+            final String link = getString(R.string.share_link);
+            AlertDialog.Builder ad = alertDialogInit(getString(R.string.share_title), link);
+            ad.setPositiveButton(R.string.share_ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Bundle postParams = new Bundle();
                     postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy way to add social networks for android application");
@@ -144,11 +142,11 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
                     if (networkId == GooglePlusSocialNetwork.ID) {
                         socialNetwork.requestPostDialog(postParams, postingComplete);
                     } else {
-                        socialNetwork.requestPostLink(postParams, message, postingComplete);
+                        socialNetwork.requestPostLink(postParams, getString(R.string.share_message), postingComplete);
                     }
                 }
             });
-            ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            ad.setNegativeButton(R.string.share_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     dialog.cancel();
@@ -166,7 +164,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
         @Override
         public void onPostSuccessfully(int socialNetworkID) {
-            Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getText(R.string.sent), Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ASNE-tutorial</string>
+    <string name="share_title">Would you like to post Link:</string>
+    <string name="share_message">Need simple social networks integration? Check this library:</string>
+    <string name="share_link" translatable="false">https://github.com/gorbin/ASNE</string>
+    <string name="share_ok">Post link</string>
+    <string name="share_cancel" translatable="false">@android:string/cancel</string>
+    <string name="sent">Sent</string>
+    <string name="loading_person">Loading social person</string>
+    <string name="loading_friends">Loading friends</string>
 
     <string name="facebook_app_id">312054032307399</string>
     <string name="facebook_login">Login via Facebook</string>

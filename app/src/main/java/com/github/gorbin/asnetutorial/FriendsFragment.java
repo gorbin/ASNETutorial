@@ -39,7 +39,7 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
         View rootView = inflater.inflate(R.layout.friends_list_fragment, container, false);
         listView = (ListView) rootView.findViewById(android.R.id.list);
 
-        MainActivity.showProgress("Loading friends");
+        MainActivity.showProgress(getText(R.string.loading_friends));
 
         SocialNetwork socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestGetFriendsCompleteListener(this);
@@ -50,7 +50,7 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
 
     @Override
     public void onGetFriendsIdComplete(int id, String[] friendsID) {
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
     }
 
     @Override
