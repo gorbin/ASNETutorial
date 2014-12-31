@@ -3,10 +3,10 @@ package com.github.gorbin.asnetutorial;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,6 +15,7 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
     public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
     private static ProgressDialog pd;
     static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
     }
 
     protected static void hideProgress() {
+        if (pd != null)
         pd.dismiss();
     }
 
