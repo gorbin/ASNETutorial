@@ -39,6 +39,7 @@ To continue you need
             <string name="twitter_consumer_key">
     	        BBQAUAVKYzmYtvEcNhUEvGiKd
             </string>
+      <string name="twitter_consumer_secret">
     			byZzHPxE1tkGmnPEj5zUyc7MG464Q1LgNRcwbBJV1Ap86575os
     		</string>
             <string name="linkedin_consumer_key">
