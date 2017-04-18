@@ -10,7 +10,7 @@ What if you need to add one more social network for your application? Sometimes 
 In this tutorial you can learn how easily integrate Facebook, Twitter in android application using [ASNE modules](https://github.com/gorbin/ASNE). This is very basic tutorial with login, sharing link and showing friends list.
  
 
-##Registering app - getting keys for your application
+## Registering app - getting keys for your application
 In order to implement Social networks in your application you need keys to make API calls. So register a new social network application and get the keys. Check small tutorial how to get it:
 
  - [Facebook](https://github.com/gorbin/ASNE/wiki/Create-Facebook-App)
@@ -22,7 +22,7 @@ To continue you need
 - Twitter consumer key and consumer secret
 - LinkedIn consumer key and consumer secret
 
-##Integrating Facebook, Twitter and LinkedIn to your application
+## Integrating Facebook, Twitter and LinkedIn to your application
 
 1. Create new Project in Android Studio
 2. Let's save our social network keys in `values/strings.xml`
@@ -771,7 +771,7 @@ getActivity().getSupportFragmentManager().popBackStack();
  
  More detailed you can read in [**FriendsFragment.java**](https://github.com/gorbin/ASNETutorial/blob/master/app/src/main/java/com/github/gorbin/asnetutorial/FriendsFragment.java)
 
-##Conclusion
+## Conclusion
 Using ASNE modules you can easily and quickly integrate any popular social networks and use common requests in your app. Of course library got [more methods](https://github.com/gorbin/ASNE/wiki/SocialNetwork-methods) which you can use in your application. But in case if you want to use social network methods from SDK or API you can easily get accesstokens or get instancesof main object in your App
 
 This is simple tutorial demom if you need more complex - [check ASNE demo app](https://github.com/gorbin/ASNE)
